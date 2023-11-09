@@ -1,0 +1,17 @@
+@import "./assets/reset.css";
+
+:root {
+  --white: #FFFFFF;
+  --primary: #007298;
+
+  --basic: #CFCFCF;
+
+}
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #F7F7F7;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
