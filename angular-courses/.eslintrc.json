@@ -7,7 +7,8 @@
     "parser": "@typescript-eslint/parser",
     "plugins": [
       "@typescript-eslint",
-      "prettier"
+      "prettier",
+      "unused-imports"
     ],
     "extends": [
       "eslint:recommended",
@@ -39,6 +40,8 @@
       ],
   
       "@typescript-eslint/no-namespace": "off",
-      "no-duplicate-imports": "error"
+      "no-duplicate-imports": "error",
+
+      "unused-imports/no-unused-imports": "error"
     }
   }
