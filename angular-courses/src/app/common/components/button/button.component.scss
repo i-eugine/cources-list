@@ -1,0 +1,19 @@
+@import 'typography';
+
+co-button {
+	display: block;
+}
+
+.co-button {
+  @extend %buttonCaps;
+
+  min-width: 140px;
+	padding: 13px 36px;
+	background-color: var(--primary);
+	border: none;
+	border-radius: 5px;
+	text-align: center;
+	color: var(--white);
+	text-transform: uppercase;
+	cursor: pointer;
+}
