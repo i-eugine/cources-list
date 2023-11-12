@@ -1,1 +1,18 @@
 /* You can add global styles to this file, and also import other style files */
+@import "./assets/reset.css";
+@import "./assets/typography.scss";
+
+:root {
+  --white: #FFFFFF;
+  --primary: #007298;
+
+  --basic: #CFCFCF;
+
+}
+
+body {
+  @extend %textCommon;
+  
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #F7F7F7;
+}
