@@ -1,0 +1,8 @@
+<div class="co-courses__actions">
+  <co-search-bar (handleSearchChange)="onSearchChange($event)" />
+
+  <co-button>add new course</co-button>
+</div>
+
+<co-course-card *ngFor="let course of courses$ |async" [course]="course" />
+

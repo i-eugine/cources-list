@@ -1,0 +1,14 @@
+<h4 class="co-course-card__headign">{{course.title}}</h4>
+
+<div class="co-course-card__content">
+  <p>{{course.description}}</p>
+
+  <div class="co-course-card__info">
+    <p><span class="co-course-card__label">Authors:</span> {{course.authors}}</p>
+    <p><span class="co-course-card__label">Duration</span> {{course.duration | duration}}</p>
+    <p><span class="co-course-card__label">Created:</span> {{course.creationDate | formatDate}}</p>
+  
+    <co-button class="co-course-card__button ">show course</co-button>
+  </div>
+
+</div>

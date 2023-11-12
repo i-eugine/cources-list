@@ -1,0 +1,10 @@
+co-courses {
+  display: flex;
+	flex-direction: column;
+	gap: 32px;
+}
+
+.co-courses__actions {
+  display: flex;
+  justify-content: space-between;
+}
