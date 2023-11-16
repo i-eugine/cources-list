@@ -1,0 +1,30 @@
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+
+import { authService } from '@api';
+import { PageCentered, LoginForm, NavigationLink } from '@components';
+import { ROUTES } from '@routing';
+import { Heading3 } from '@styles/typography';
+
+export const Registration = () => {
+	const navigate = useNavigate();
+
+	const handleFormSubmit = async (data) => {
+		await authService.register(data);
+
+		navigate(`/${ROUTES.login}`);
+	};
+
+	return (
+		<PageCentered>
+			<Heading3 $marginBottom={'xl'}>Registration</Heading3>
+
+			<LoginForm onFormSubmit={handleFormSubmit}>
+				<p>
+					If you have an account you may{' '}
+					<NavigationLink to={ROUTES.login}>Login</NavigationLink>
+				</p>
+			</LoginForm>
+		</PageCentered>
+	);
+};

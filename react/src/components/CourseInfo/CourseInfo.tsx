@@ -1,33 +1,18 @@
+import { Flex } from '@components/style/Flex';
 import React, { FC } from 'react';
-import { Button } from 'src/common';
-import { ICourse } from 'src/models/iCourse';
-import {
-	Heading3,
-	Heading5,
-	TextBold,
-	TextCommon,
-} from 'src/styles/typography';
+import { useLoaderData, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-const CourseInfoCard = styled.div`
-	padding: 60px;
-	margin-top: 24px;
-	margin-bottom: 46px;
-	background-color: var(--white);
-	border-radius: 5px;
-	border: 1px solid var(--basic);
-`;
+import { Button, Card } from '@components';
+import { ROUTES } from '@routing';
+import { Heading3, Heading5, TextBold, TextCommon } from '@styles/typography';
 
-const CourseInfoCardContent = styled.div`
-	display: flex;
-	gap: 40px;
-	margin-top: 25px;
-`;
+import { couseInfoLoader } from './courseInfo.loader';
 
 const CourseInfoCardDetails = styled.div`
+	display: grid;
+	grid-template-columns: 120px auto;
 	min-width: 480px;
-	display: flex;
-	flex-direction: column;
 	gap: 28px;
 	padding-left: 40px;
 	border-left: 1px solid var(--basic);
@@ -37,50 +22,42 @@ const CourseInfoCardLabel = styled(TextBold)`
 	width: 120px;
 `;
 
-const CourseInfoActions = styled.div`
-	display: flex;
-	justify-content: end;
-`;
+export const CourseInfo: FC = () => {
+	const navigate = useNavigate();
+	const course = useLoaderData() as Awaited<ReturnType<typeof couseInfoLoader>>;
+	return (
+		<>
+			<Heading3>{course.title}</Heading3>
 
-interface Props {
-	course: ICourse;
-	backHandler: () => void;
-}
-export const CourseInfo: FC<Props> = ({ course, backHandler }) => (
-	<>
-		<Heading3>{course.title}</Heading3>
-		<CourseInfoCard>
-			<div>
+			<Card $marginBottom={'md'} $marginTop={'md'}>
 				<Heading5>Description: </Heading5>
-			</div>
-			<CourseInfoCardContent>
-				<TextCommon>{course.description}</TextCommon>
-				<CourseInfoCardDetails>
-					<div>
+
+				<Flex $gap={'40px'} $justifyContent='space-between' $marginTop={'lg'}>
+					<TextCommon>{course.description}</TextCommon>
+
+					<CourseInfoCardDetails>
 						<CourseInfoCardLabel>ID:</CourseInfoCardLabel>
 						<TextCommon>{course.id}</TextCommon>
-					</div>
-					<div>
+
 						<CourseInfoCardLabel>Duration:</CourseInfoCardLabel>
 						<TextCommon>
 							<TextBold>{course.duration}</TextBold> hours
 						</TextCommon>
-					</div>
-					<div>
+
 						<CourseInfoCardLabel>Created:</CourseInfoCardLabel>
 						<TextCommon>{course.creationDate}</TextCommon>
-					</div>
-					<div>
+
 						<CourseInfoCardLabel>Authors:</CourseInfoCardLabel>
 						<TextCommon>
 							{course.authors.map(({ name }) => name).join(', ')}
 						</TextCommon>
-					</div>
-				</CourseInfoCardDetails>
-			</CourseInfoCardContent>
-		</CourseInfoCard>
-		<CourseInfoActions>
-			<Button onClick={backHandler}>BACK</Button>
-		</CourseInfoActions>
-	</>
-);
+					</CourseInfoCardDetails>
+				</Flex>
+			</Card>
+
+			<Flex $justifyContent='flex-end'>
+				<Button onClick={() => navigate(`/${ROUTES.courses}`)}>BACK</Button>
+			</Flex>
+		</>
+	);
+};

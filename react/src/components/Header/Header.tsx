@@ -1,8 +1,12 @@
+import { Flex } from '@components/style/Flex';
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
+
+import { Button } from '@components';
+import { ROUTES } from '@routing';
 
 import { Logo } from './components/Logo/Logo';
-import { Button } from 'src/common';
-import styled from 'styled-components';
 
 const HeaderWrapper = styled.div`
 	display: flex;
@@ -13,10 +17,29 @@ const HeaderWrapper = styled.div`
 	box-shadow: 1px 1px 4px 0px #00000026;
 `;
 
-export const Header = () => (
-	<HeaderWrapper>
-		<Logo />
+export const Header = () => {
+	const navigate = useNavigate();
 
-		<Button>LOGIN</Button>
-	</HeaderWrapper>
-);
+	const name = localStorage.getItem('name');
+
+	return (
+		<HeaderWrapper>
+			<Logo />
+
+			{name && (
+				<Flex $alignItems='center' $gap={'md'}>
+					{name}
+					<Button
+						onClick={() => {
+							localStorage.removeItem('name');
+							localStorage.removeItem('token');
+							navigate(`/${ROUTES.login}`);
+						}}
+					>
+						LOGOUT
+					</Button>
+				</Flex>
+			)}
+		</HeaderWrapper>
+	);
+};

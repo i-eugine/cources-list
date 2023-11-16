@@ -1,5 +1,6 @@
-import { ButtonCaps } from 'src/styles/typography';
 import styled from 'styled-components';
+
+import { ButtonCaps } from '@styles/typography';
 
 export const Button = styled(ButtonCaps).attrs({ as: 'button' })`
 	min-width: 140px;
@@ -8,6 +9,8 @@ export const Button = styled(ButtonCaps).attrs({ as: 'button' })`
 	border: none;
 	border-radius: 5px;
 	text-align: center;
+	white-space: nowrap;
+	text-transform: uppercase;
 	color: var(--white);
 	cursor: pointer;
 `;
