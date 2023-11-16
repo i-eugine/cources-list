@@ -1,6 +1,6 @@
 import { IAuthor } from './iAuthor';
 
-export interface ICourse<TA = IAuthor, TD = string> {
+interface ICourseBase<TA, TD> {
 	id: string;
 	title: string;
 	description: string;
@@ -8,3 +8,6 @@ export interface ICourse<TA = IAuthor, TD = string> {
 	duration: TD;
 	authors: TA[];
 }
+
+export type ICourseDTO = ICourseBase<string, number>;
+export type ICourse = ICourseBase<IAuthor, string>;

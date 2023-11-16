@@ -1,8 +1,9 @@
-import React, { FC, useState  } from 'react';
-import { Button, Input } from 'src/common';
+import React, { FC, useState } from 'react';
 import styled from 'styled-components';
 
-const SearchBarWrapper = styled.div`
+import { Button, Input } from '@components';
+
+const SearchBarWrapper = styled.form`
 	display: flex;
 	gap: 12px;
 `;
@@ -22,9 +23,9 @@ export const SearchBar: FC<Props> = ({ searchHandler }) => {
 			}}
 		>
 			<Input
+				placeholder='Input text'
 				value={search}
 				onChange={(e) => setSearch(e.target.value)}
-				placeholder='Input text'
 			/>
 			<Button type='submit'>SEARCH</Button>
 		</SearchBarWrapper>

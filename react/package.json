@@ -6,24 +6,25 @@
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "axios": "^1.6.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-hook-form": "^7.48.2",
+    "react-router-dom": "^6.18.0",
     "react-scripts": "5.0.1",
     "styled-components": "^6.1.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
+    "start": "craco start",
+    "build": "craco build",
+    "test": "craco test",
     "eject": "react-scripts eject",
-
-    "eslint": "eslint --ext .ts --ext .tsx src",
-    "eslint:fix": "eslint --fix --ext .ts --ext .tsx src",
-
+    "lint": "eslint --ext .ts --ext .tsx src",
+    "lint:fix": "eslint --fix --ext .ts --ext .tsx src",
     "test:nowatch": "react-scripts test --watchAll=false",
     "prepare": "cd .. && husky install react/.husky",
-    "prepublish": "npm run eslint:fix"
+    "prepublish": "npm run lint:fix"
   },
   "eslintConfig": {
     "extends": [
@@ -44,10 +45,14 @@
     ]
   },
   "devDependencies": {
+    "@craco/craco": "^7.1.0",
     "@trivago/prettier-plugin-sort-imports": "^4.2.1",
+    "craco-alias": "^3.0.1",
     "eslint": "^8.53.0",
     "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-perfectionist": "^2.3.0",
     "eslint-plugin-prettier": "^5.0.1",
+    "eslint-plugin-unused-imports": "^2.0.0",
     "husky": "^8.0.3",
     "prettier": "^3.0.3"
   }

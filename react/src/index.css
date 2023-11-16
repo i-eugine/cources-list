@@ -3,9 +3,17 @@
 :root {
   --white: #FFFFFF;
   --primary: #007298;
-
+  --error: #FF0000;
   --basic: #CFCFCF;
 
+
+  --background: #F7F7F7;
+
+  --gap-xs: 8px;
+  --gap-sm: 12px;
+  --gap-md: 18px;
+  --gap-lg: 24px;
+  --gap-xl: 32px;
 }
 
 body {

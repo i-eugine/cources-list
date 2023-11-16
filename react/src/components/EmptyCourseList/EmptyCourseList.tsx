@@ -1,30 +1,16 @@
 import React from 'react';
-import { Button } from 'src/common';
-import { Heading3, TextCommon } from 'src/styles/typography';
-import styled from 'styled-components';
 
-const EmptyCourseListWrapper = styled.div`
-	width: 100%;
-	height: 100%;
-	padding-bottom: 74px;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-`;
-const EmptyCourseListText = styled(TextCommon)`
-	margin-top: 24px;
-	margin-bottom: 40px;
-`;
+import { PageCentered, Button } from '@components';
+import { TextCommon, Heading3 } from '@styles/typography';
 
 export const EmptyCourseList = () => {
 	return (
-		<EmptyCourseListWrapper>
+		<PageCentered>
 			<Heading3>Your List Is Empty</Heading3>
-			<EmptyCourseListText>
+			<TextCommon $marginBottom={'md'} $marginTop={'xl'}>
 				Please use ’Add New Course’ button to add your first course
-			</EmptyCourseListText>
+			</TextCommon>
 			<Button>ADD NEW COURSE</Button>
-		</EmptyCourseListWrapper>
+		</PageCentered>
 	);
 };
