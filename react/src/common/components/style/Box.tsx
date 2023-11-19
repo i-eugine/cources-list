@@ -18,6 +18,8 @@ export interface BoxProps {
 
 	$marginBottom: SpacingType;
 	$marginTop: SpacingType;
+	$marginRight: SpacingType;
+	$marginLeft: SpacingType;
 	$margin: SpacingType;
 
 	$padding: SpacingType;
@@ -34,6 +36,8 @@ export const Box = styled.div<Partial<BoxProps>>`
 
 	margin-bottom: ${(p) => spacing(p.$marginBottom)};
 	margin-top: ${(p) => spacing(p.$marginTop)};
+	margin-right: ${(p) => spacing(p.$marginRight)};
+	margin-left: ${(p) => spacing(p.$marginLeft)};
 	margin: ${(p) => spacing(p.$margin)};
 
 	padding-top: ${(p) => spacing(p.$paddingTop)};

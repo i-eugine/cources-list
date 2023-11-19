@@ -10,6 +10,9 @@
       "@models": ["./models"],
       "@routing": ["./routing"],
 
+      "@store": ["./store"],
+      "@store/*": ["./store/*"],
+
       "@pages/*": ["./components/*"],
       "@styles/*": ["./styles/*"]
     }

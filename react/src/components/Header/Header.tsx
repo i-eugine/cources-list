@@ -1,12 +1,15 @@
-import { Flex } from '@components/style/Flex';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { Button } from '@components';
+import { Box } from '@components/style';
 import { ROUTES } from '@routing';
+import { useAppDispatch, useAppSelector } from '@store/hooks';
+import { userSelector } from '@store/selectors';
+import { logoutUser } from '@store/slices/user.slice';
 
-import { Logo } from './components/Logo/Logo';
+import { Logo } from './components/Logo';
 
 const HeaderWrapper = styled.div`
 	display: flex;
@@ -19,27 +22,30 @@ const HeaderWrapper = styled.div`
 
 export const Header = () => {
 	const navigate = useNavigate();
+	const dispatch = useAppDispatch();
 
-	const name = localStorage.getItem('name');
+	const user = useAppSelector(userSelector);
 
 	return (
 		<HeaderWrapper>
 			<Logo />
 
-			{name && (
-				<Flex $alignItems='center' $gap={'md'}>
-					{name}
+			{user.isAuth && (
+				<Box>
+					{user.name || user.email}
 					<Button
+						$marginLeft={'xs'}
 						onClick={() => {
-							localStorage.removeItem('name');
 							localStorage.removeItem('token');
-							navigate(`/${ROUTES.login}`);
+							dispatch(logoutUser());
 						}}
 					>
 						LOGOUT
 					</Button>
-				</Flex>
+				</Box>
 			)}
+
+			{!user.isAuth && <Button onClick={() => navigate(`/${ROUTES.login}`)}>LOGIN</Button>}
 		</HeaderWrapper>
 	);
 };

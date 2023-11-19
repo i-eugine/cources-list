@@ -1,27 +1,20 @@
-import { Flex } from '@components/style/Flex';
 import React, { FC, useMemo, useState } from 'react';
-import { useLoaderData, useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 import { Button } from '@components';
+import { Flex } from '@components/style/Flex';
 import { ICourse } from '@models';
 import { ROUTES } from '@routing';
+import { useAppSelector } from '@store/hooks';
+import { coursesSelector } from '@store/selectors';
 
-import { CourseCard } from './components/CourseCard/CourseCard';
-import { SearchBar } from './components/SearchBar/SearchBar';
-import { cousesLoader } from './courses.loader';
-
-const CoursesActions = styled.div`
-	display: flex;
-	justify-content: space-between;
-`;
+import { CourseCard } from './components/CourseCard';
+import { SearchBar } from './components/SearchBar';
 
 const filterCourses = (courses: ICourse[], search) => {
 	const value = search.toLowerCase();
 
-	return courses.filter(
-		({ id, title }) => id === value || title.toLowerCase().includes(value)
-	);
+	return courses.filter(({ id, title }) => id === value || title.toLowerCase().includes(value));
 };
 
 export const Courses: FC = () => {
@@ -29,41 +22,27 @@ export const Courses: FC = () => {
 
 	const [search, setSearch] = useState('');
 
-	const courses = useLoaderData() as Awaited<ReturnType<typeof cousesLoader>>;
+	const courses = useAppSelector(coursesSelector);
 
-	const currentCourses =
-		useMemo(() => {
-			console.log('ara', courses);
-			return search ? filterCourses(courses, search) : courses;
-		}, [search]) || [];
+	const currentCourses = useMemo(
+		() => (search ? filterCourses(courses, search) : courses),
+		[search, courses]
+	);
 
-	console.log(currentCourses);
-
-	const searchHandler = (value: string) => {
-		const search = value.toLowerCase();
-
-		setCurrentCourses(
-			value
-				? courses.filter(
-						({ id, title }) =>
-							id === search || title.toLowerCase().includes(search)
-				  )
-				: courses
-		);
-	};
+	if (!courses.length) {
+		return <Navigate to={`/${ROUTES.noCourses}`} />;
+	}
 
 	return (
 		<Flex $flexDirection='column' $gap={'xl'}>
 			<Flex $justifyContent='space-between'>
-				<SearchBar searchHandler={searchHandler} />
+				<SearchBar searchHandler={setSearch} />
 
-				<Button onClick={() => navigate(`/${ROUTES.courses}/${ROUTES.add}`)}>
-					ADD NEW COURSE
-				</Button>
+				<Button onClick={() => navigate(`/${ROUTES.courses}/${ROUTES.add}`)}>ADD NEW COURSE</Button>
 			</Flex>
-			{currentCourses.map((course) => {
-				return <CourseCard key={course.id} course={course} />;
-			})}
+			{currentCourses.map((course) => (
+				<CourseCard key={course.id} course={course} />
+			))}
 		</Flex>
 	);
 };

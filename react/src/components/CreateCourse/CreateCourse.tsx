@@ -1,20 +1,24 @@
-import { Box } from '@components/style/Box';
-import { Flex } from '@components/style/Flex';
-import React, { useCallback, useState } from 'react';
-import { FormProvider, useForm, useWatch } from 'react-hook-form';
+import React from 'react';
+import { FormProvider } from 'react-hook-form';
 import { useLoaderData, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { authorsService, coursesService } from '@api';
+import { AuthorsService, CoursesService, inject } from '@api';
 import { Button, Card, ConnectedControl, Input, Textarea } from '@components';
-import { getCourseDuration } from '@helpers';
-import { IAuthor } from '@models';
+import { Box } from '@components/style/Box';
+import { Flex } from '@components/style/Flex';
+import { LoaderType, getCourseDuration } from '@helpers';
+import { ICourse } from '@models';
+import { couseInfoLoader } from '@pages/CourseInfo';
 import { ROUTES } from '@routing';
+import { useAppDispatch } from '@store/hooks';
+import { saveAuthor, deleteAuthor } from '@store/slices/authors.slice';
+import { addCourse, saveCourse } from '@store/slices/courses.slice';
 import { Heading3, TextCommon, Heading4, TextBold } from '@styles/typography';
 
 import { AuthorItem } from './components/AuthorItem';
 import { AuthorsBlock } from './components/AuthorsBlock';
-import { CreateCourseLoaderType } from './createCourse.loader';
+import { useCreateCourse } from './useCreateCourse.hook';
 
 const DurationDisplay = styled(TextCommon)`
 	white-space: nowrap;
@@ -24,66 +28,34 @@ export const AUTHORS_FIELD = 'authors';
 
 export const CreateCourse = () => {
 	const navigate = useNavigate();
+	const dispatch = useAppDispatch();
 
-	const authorsList = useLoaderData() as CreateCourseLoaderType;
-	const [allAuthors, setAllAuthors] = useState(authorsList);
+	const course = useLoaderData() as LoaderType<typeof couseInfoLoader>;
 
-	/** TODO */
-	const methods = useForm<any>({
-		mode: 'onBlur',
-		reValidateMode: 'onChange',
-
-		defaultValues: {
-			[AUTHORS_FIELD]: [],
-		},
-	});
-	const { register, control, setValue, handleSubmit } = methods;
-
-	register(AUTHORS_FIELD, { value: [] });
-
-	const duration = useWatch({ control, name: 'duration' });
-	const authorList = useWatch({
-		control,
-		name: AUTHORS_FIELD,
-	});
-
-	console.log(authorList);
-
-	const handleAuthorAdd = useCallback(
-		(author: IAuthor) => {
-			setValue(AUTHORS_FIELD, [...authorList, author]);
-			setAllAuthors(allAuthors.filter(({ id }) => author.id !== id));
-		},
-		[authorList, setValue]
-	);
+	const { methods, duration, courseAuthors, authors, handleAuthorAdd, handleAuthorExclude } =
+		useCreateCourse(course);
 
 	const handleAuthorCreate = async (name) => {
+		const authorsService = inject(AuthorsService);
 		const author = await authorsService.create(name);
-		setAllAuthors([...allAuthors, author]);
+		dispatch(saveAuthor(author));
 	};
 
 	const handleAuthorDelete = async (id) => {
+		const authorsService = inject(AuthorsService);
 		await authorsService.delete(id);
-		setAllAuthors(allAuthors.filter((author) => author.id !== id));
+		dispatch(deleteAuthor(id));
 	};
 
-	const handleAuthorExclude = (author) => {
-		setAllAuthors([...allAuthors, author]);
-		setValue(
-			AUTHORS_FIELD,
-			authorList.filter(({ id }) => author.id !== id)
-		);
-	};
-
-	const handleCourseSubmit = async (data) => {
-		console.log(data);
-
-		const req = {
-			...data,
-			duration: parseInt(data.duration),
-			authors: data[AUTHORS_FIELD].map(({ id }) => id),
-		};
-		await coursesService.create(req);
+	const handleCourseSubmit = async (form: ICourse) => {
+		const coursesService = inject(CoursesService);
+		if (course) {
+			const resp = await coursesService.update(form);
+			dispatch(saveCourse({ ...resp, authors: form.authors }));
+		} else {
+			const resp = await coursesService.create(form);
+			dispatch(addCourse({ ...resp, authors: form.authors }));
+		}
 
 		navigate(`/${ROUTES.courses}`);
 	};
@@ -93,7 +65,7 @@ export const CreateCourse = () => {
 			<Heading3 $marginBottom={'xl'}>Course edit/create page</Heading3>
 
 			<FormProvider {...methods}>
-				<form onSubmit={handleSubmit(handleCourseSubmit)}>
+				<form onSubmit={methods.handleSubmit(handleCourseSubmit)}>
 					<Card $flexDirection={'column'} $gap={'md'}>
 						<Heading4>Main info</Heading4>
 						<ConnectedControl
@@ -129,7 +101,7 @@ export const CreateCourse = () => {
 								<Heading4>Authors</Heading4>
 
 								<AuthorsBlock
-									authors={allAuthors}
+									authors={authors}
 									onAdd={handleAuthorAdd}
 									onCreate={handleAuthorCreate}
 									onDelete={handleAuthorDelete}
@@ -140,13 +112,9 @@ export const CreateCourse = () => {
 								<Heading4>Course Authors</Heading4>
 
 								<Box $padding={'md'}>
-									{authorList.length ? (
-										authorList.map((author) => (
-											<AuthorItem
-												key={author.id}
-												author={author}
-												onDelete={handleAuthorExclude}
-											/>
+									{courseAuthors.length ? (
+										courseAuthors.map((author) => (
+											<AuthorItem key={author.id} author={author} onDelete={handleAuthorExclude} />
 										))
 									) : (
 										<TextCommon>Author list is empty</TextCommon>
@@ -156,13 +124,11 @@ export const CreateCourse = () => {
 						</Flex>
 					</Card>
 
-					<Flex
-						$gap={'md'}
-						$justifyContent={'flex-end'}
-						$marginTop={'md'}
-						$width={'100%'}
-					>
-						<Button>cancel</Button>
+					<Flex $gap={'md'} $justifyContent={'flex-end'} $marginTop={'md'} $width={'100%'}>
+						<Button type='button' onClick={() => navigate(-1)}>
+							cancel
+						</Button>
+
 						<Button type='submit'>create course</Button>
 					</Flex>
 				</form>

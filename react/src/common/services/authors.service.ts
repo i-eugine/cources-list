@@ -4,9 +4,11 @@ import { IResponse, IAuthor, ICourse } from '@models';
 
 import { API_URL } from './api.config';
 
-class AuthorsService {
-	all() {
-		return axios.get<IResponse<IAuthor[]>>(`${API_URL}/authors/all`);
+export class AuthorsService {
+	async all() {
+		const resp = await axios.get<IResponse<IAuthor[]>>(`${API_URL}/authors/all`);
+
+		return resp.data.result;
 	}
 
 	get(id: string) {
@@ -18,19 +20,16 @@ class AuthorsService {
 		const result = await axios.post<IResponse<IAuthor>>(
 			`${API_URL}/authors/add`,
 			{ name },
-			{
-				headers: {
-					Authorization,
-				},
-			}
+			{ headers: { Authorization } }
 		);
 
 		return result.data.result;
 	}
 
 	delete(id: string) {
-		return axios.delete<IResponse<ICourse>>(`${API_URL}/authors/${id}`);
+		const Authorization = localStorage.getItem('token');
+		return axios.delete<IResponse<ICourse>>(`${API_URL}/authors/${id}`, {
+			headers: { Authorization },
+		});
 	}
 }
-
-export const authorsService = new AuthorsService();
