@@ -1,17 +1,21 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { authService } from '@api';
+import { AuthService, inject } from '@api';
 import { PageCentered, LoginForm, NavigationLink } from '@components';
 import { ROUTES } from '@routing';
+import { useAppDispatch } from '@store/hooks';
+import { loginUser } from '@store/slices/user.slice';
 import { Heading3 } from '@styles/typography';
 
 export const Login = () => {
+	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
 
 	const handleFormSubmit = async (data) => {
-		await authService.login(data);
-
+		const auth = inject(AuthService);
+		const user = await auth.login(data);
+		dispatch(loginUser(user));
 		navigate(`/${ROUTES.courses}`);
 	};
 

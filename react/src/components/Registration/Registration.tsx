@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { authService } from '@api';
+import { AuthService, inject } from '@api';
 import { PageCentered, LoginForm, NavigationLink } from '@components';
 import { ROUTES } from '@routing';
 import { Heading3 } from '@styles/typography';
@@ -10,8 +10,8 @@ export const Registration = () => {
 	const navigate = useNavigate();
 
 	const handleFormSubmit = async (data) => {
-		await authService.register(data);
-
+		const auth = inject(AuthService);
+		await auth.register(data);
 		navigate(`/${ROUTES.login}`);
 	};
 
@@ -21,8 +21,7 @@ export const Registration = () => {
 
 			<LoginForm onFormSubmit={handleFormSubmit}>
 				<p>
-					If you have an account you may{' '}
-					<NavigationLink to={ROUTES.login}>Login</NavigationLink>
+					If you have an account you may <NavigationLink to={ROUTES.login}>Login</NavigationLink>
 				</p>
 			</LoginForm>
 		</PageCentered>

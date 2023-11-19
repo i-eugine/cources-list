@@ -22,11 +22,7 @@ export const SearchBar: FC<Props> = ({ searchHandler }) => {
 				searchHandler(search);
 			}}
 		>
-			<Input
-				placeholder='Input text'
-				value={search}
-				onChange={(e) => setSearch(e.target.value)}
-			/>
+			<Input placeholder='Input text' value={search} onChange={(e) => setSearch(e.target.value)} />
 			<Button type='submit'>SEARCH</Button>
 		</SearchBarWrapper>
 	);

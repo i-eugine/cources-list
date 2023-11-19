@@ -19,12 +19,7 @@ type Props = {
 	element: JSX.Element;
 };
 
-export const ConnectedControl: FC<Props> = ({
-	name,
-	label,
-	options,
-	element,
-}) => {
+export const ConnectedControl: FC<Props> = ({ name, label, options, element }) => {
 	const {
 		register,
 		formState: { errors },

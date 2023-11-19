@@ -1,10 +1,18 @@
 import React from 'react';
-import { RouterProvider } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { RouterProvider } from 'react-router';
 
 import { router } from '@routing';
+import { store } from '@store';
 
 const App = () => {
-	return <RouterProvider router={router} />;
+	return (
+		<Provider store={store}>
+			<React.StrictMode>
+				<RouterProvider router={router} />
+			</React.StrictMode>
+		</Provider>
+	);
 };
 
 export default App;

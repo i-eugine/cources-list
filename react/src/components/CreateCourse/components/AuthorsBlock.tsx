@@ -1,8 +1,8 @@
-import { Flex } from '@components/style/Flex';
 import React, { FC, useState } from 'react';
 
 import { Label, Input, Button } from '@components';
 import { Box } from '@components/style';
+import { Flex } from '@components/style/Flex';
 import { IAuthor } from '@models';
 import { Heading5 } from '@styles/typography';
 
@@ -15,12 +15,7 @@ type Props = {
 	onDelete: (authorId: string) => void;
 };
 
-export const AuthorsBlock: FC<Props> = ({
-	authors,
-	onAdd,
-	onCreate,
-	onDelete,
-}) => {
+export const AuthorsBlock: FC<Props> = ({ authors, onAdd, onCreate, onDelete }) => {
 	const [authorInput, setAuthorInput] = useState('');
 
 	return (
@@ -29,10 +24,7 @@ export const AuthorsBlock: FC<Props> = ({
 				<Box $width='300px'>
 					<Label>Author Name</Label>
 
-					<Input
-						value={authorInput}
-						onChange={(e) => setAuthorInput(e.target.value)}
-					/>
+					<Input value={authorInput} onChange={(e) => setAuthorInput(e.target.value)} />
 				</Box>
 
 				<Button type='button' onClick={() => onCreate(authorInput)}>

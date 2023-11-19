@@ -2,9 +2,7 @@ import styled from 'styled-components';
 
 import { Box } from '@components/style';
 
-const typography = (size: string, weight: number, height: string) => styled(
-	Box
-)`
+const typography = (size: string, weight: number, height: string) => styled(Box)`
 	display: inline-block;
 	font-size: ${size};
 	font-weight: ${weight};

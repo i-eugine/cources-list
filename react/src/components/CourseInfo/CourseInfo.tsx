@@ -1,9 +1,10 @@
-import { Flex } from '@components/style/Flex';
 import React, { FC } from 'react';
 import { useLoaderData, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { Button, Card } from '@components';
+import { Flex } from '@components/style/Flex';
+import { LoaderType, getCourseDuration } from '@helpers';
 import { ROUTES } from '@routing';
 import { Heading3, Heading5, TextBold, TextCommon } from '@styles/typography';
 
@@ -24,7 +25,7 @@ const CourseInfoCardLabel = styled(TextBold)`
 
 export const CourseInfo: FC = () => {
 	const navigate = useNavigate();
-	const course = useLoaderData() as Awaited<ReturnType<typeof couseInfoLoader>>;
+	const course = useLoaderData() as LoaderType<typeof couseInfoLoader>;
 	return (
 		<>
 			<Heading3>{course.title}</Heading3>
@@ -41,16 +42,14 @@ export const CourseInfo: FC = () => {
 
 						<CourseInfoCardLabel>Duration:</CourseInfoCardLabel>
 						<TextCommon>
-							<TextBold>{course.duration}</TextBold> hours
+							<TextBold>{getCourseDuration(course.duration)}</TextBold> hours
 						</TextCommon>
 
 						<CourseInfoCardLabel>Created:</CourseInfoCardLabel>
 						<TextCommon>{course.creationDate}</TextCommon>
 
 						<CourseInfoCardLabel>Authors:</CourseInfoCardLabel>
-						<TextCommon>
-							{course.authors.map(({ name }) => name).join(', ')}
-						</TextCommon>
+						<TextCommon>{course.authors.map(({ name }) => name).join(', ')}</TextCommon>
 					</CourseInfoCardDetails>
 				</Flex>
 			</Card>
