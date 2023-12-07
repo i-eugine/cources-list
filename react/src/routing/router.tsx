@@ -1,7 +1,6 @@
 import React from 'react';
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 
-import { inject, CoursesService, AuthorsService } from '@api';
 import { Layout } from '@components';
 import { CourseInfo, couseInfoLoader } from '@pages/CourseInfo';
 import { Courses } from '@pages/Courses';
@@ -9,9 +8,9 @@ import { CreateCourse } from '@pages/CreateCourse';
 import { EmptyCourseList } from '@pages/EmptyCourseList';
 import { Login } from '@pages/Login';
 import { Registration } from '@pages/Registration';
+import { getData } from '@store/common.thunk';
 import { store } from '@store/index';
-import { getAllAuthors } from '@store/slices/authors.slice';
-import { getAllCourses } from '@store/slices/courses.slice';
+import { authUser } from '@store/slices/user.slice';
 
 import { ROUTE_PARAM } from './route-param';
 import { ROUTES } from './routes';
@@ -28,7 +27,6 @@ export const protectedRoutes = [
 	{
 		path: `${ROUTES.courses}/:${ROUTE_PARAM.courseId}`,
 		element: <CourseInfo />,
-		loader: couseInfoLoader,
 	},
 	{
 		path: `${ROUTES.courses}/:${ROUTE_PARAM.courseId}/${ROUTES.edit}`,
@@ -63,17 +61,12 @@ export const router = createBrowserRouter([
 		children: [
 			{
 				path: '',
-				loader: async () => {
-					const courses = inject(CoursesService);
-					const authors = inject(AuthorsService);
-
-					const [allCourses, allAuthros] = await Promise.all([courses.all(), authors.all()]);
-
-					store.dispatch(getAllAuthors(allAuthros));
-					store.dispatch(getAllCourses(allCourses));
-
-					return null;
-				},
+				loader: () =>
+					Promise.allSettled(
+						localStorage.getItem('token')
+							? [store.dispatch(getData()), store.dispatch(authUser())]
+							: [store.dispatch(getData())]
+					),
 				children: [...protectedRoutes],
 			},
 			...unprotectedRoutes,

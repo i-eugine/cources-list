@@ -1,14 +1,14 @@
 import React, { FC } from 'react';
-import { useLoaderData, useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { Button, Card } from '@components';
 import { Flex } from '@components/style/Flex';
-import { LoaderType, getCourseDuration } from '@helpers';
-import { ROUTES } from '@routing';
+import { getCourseDuration } from '@helpers';
+import { ROUTES, ROUTE_PARAM } from '@routing';
+import { useAppSelector } from '@store/hooks';
+import { courseByIdSelector } from '@store/slices/courses.slice';
 import { Heading3, Heading5, TextBold, TextCommon } from '@styles/typography';
-
-import { couseInfoLoader } from './courseInfo.loader';
 
 const CourseInfoCardDetails = styled.div`
 	display: grid;
@@ -22,10 +22,12 @@ const CourseInfoCardDetails = styled.div`
 const CourseInfoCardLabel = styled(TextBold)`
 	width: 120px;
 `;
-
+// ask what do thunk abortZ
 export const CourseInfo: FC = () => {
 	const navigate = useNavigate();
-	const course = useLoaderData() as LoaderType<typeof couseInfoLoader>;
+	const id = useParams()[ROUTE_PARAM.courseId];
+	const course = useAppSelector(courseByIdSelector(id));
+
 	return (
 		<>
 			<Heading3>{course.title}</Heading3>

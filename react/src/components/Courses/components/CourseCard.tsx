@@ -2,9 +2,7 @@ import React, { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { CoursesService, inject } from '@api';
-import { Button, PencilIcon, TrashIcon } from '@components';
-import { ButtonIcon } from '@components/ButtonIcon';
+import { Button, ButtonIcon, PencilIcon, TrashIcon } from '@components';
 import { Flex } from '@components/style/Flex';
 import { getCourseDuration } from '@helpers';
 import { ICourse } from '@models';
@@ -37,11 +35,7 @@ export const CourseCard: FC<Props> = ({ course }) => {
 	const navigate = useNavigate();
 	const dispatch = useAppDispatch();
 
-	const handleDelete = async () => {
-		const courses = inject(CoursesService);
-		await courses.delete(course.id);
-		dispatch(deleteCourse(course.id));
-	};
+	const handleDelete = () => dispatch(deleteCourse(course.id));
 
 	return (
 		<CardWrapper>

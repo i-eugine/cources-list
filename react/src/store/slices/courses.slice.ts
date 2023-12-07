@@ -1,29 +1,62 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createAsyncThunk, createEntityAdapter, createSlice } from '@reduxjs/toolkit';
 
-import { ICourse } from '@models';
+import { inject, CoursesService } from '@api';
+import { ICourse, ICourseDTO } from '@models';
+import { RootState } from '@store';
 
-const initialState: ICourse[] = [];
+// TODO: add regions
+const name = 'courses';
+
+//#region thunk
+const toDTO = (course: ICourse): ICourseDTO => ({
+	...course,
+	authors: course.authors.map(({ id }) => id),
+	duration: parseInt(`${course.duration}`),
+});
+
+export const saveCourse = createAsyncThunk(`${name}/saveCourse`, async (course: ICourse) => {
+	const coursesService = inject(CoursesService);
+	const resp = await coursesService.update(toDTO(course));
+	return { ...resp.data.result, authors: course.authors };
+});
+
+export const addCourse = createAsyncThunk(`${name}/addCourse`, async (course: ICourse) => {
+	const coursesService = inject(CoursesService);
+	const resp = await coursesService.create(toDTO(course));
+	return { ...resp.data.result, authors: course.authors };
+});
+
+export const deleteCourse = createAsyncThunk(`${name}/deleteCourse`, async (id: string) => {
+	const coursesService = inject(CoursesService);
+	await coursesService.delete(id);
+	return id;
+});
+//#endregion
+
+//#region slice
+
+const courses = createEntityAdapter<ICourse>({ selectId: (c) => c.id });
+
+export const coursesSelector = courses.getSelectors<RootState>((s) => s.courses).selectAll;
+export const courseByIdSelector = (id: string) => (state: RootState) =>
+	courses.getSelectors<RootState>((s) => s.courses).selectById(state, id);
 
 const coursesSlice = createSlice({
 	name: 'courses',
-	initialState,
+	initialState: courses.getInitialState(),
 	reducers: {
-		getAllCourses(_, { payload }: PayloadAction<ICourse[]>) {
-			return payload;
-		},
-		saveCourse(state, { payload }: PayloadAction<ICourse>) {
-			console.log('saving course', payload);
-			const index = state.findIndex((c) => payload.id === c.id);
-			state[index] = payload;
-		},
-		addCourse(state, { payload }: PayloadAction<ICourse>) {
-			return [...state, payload];
-		},
-		deleteCourse(state, { payload }: PayloadAction<string>) {
-			return state.filter(({ id }) => id !== payload);
-		},
+		getAllCourses: courses.setAll,
+	},
+	extraReducers: (builder) => {
+		builder.addCase(saveCourse.fulfilled, (state, { payload }) => {
+			courses.updateOne(state, { id: payload.id, changes: payload });
+		});
+
+		builder.addCase(addCourse.fulfilled, courses.addOne);
+		builder.addCase(deleteCourse.fulfilled, courses.removeOne);
 	},
 });
 
-export const { getAllCourses, saveCourse, addCourse, deleteCourse } = coursesSlice.actions;
+export const { getAllCourses } = coursesSlice.actions;
 export default coursesSlice.reducer;
+//#endregion
