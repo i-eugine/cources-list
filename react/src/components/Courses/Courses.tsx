@@ -6,7 +6,7 @@ import { Flex } from '@components/style/Flex';
 import { ICourse } from '@models';
 import { ROUTES } from '@routing';
 import { useAppSelector } from '@store/hooks';
-import { coursesSelector } from '@store/selectors';
+import { coursesSelector } from '@store/slices/courses.slice';
 
 import { CourseCard } from './components/CourseCard';
 import { SearchBar } from './components/SearchBar';

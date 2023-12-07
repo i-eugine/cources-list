@@ -6,8 +6,7 @@ import { Button } from '@components';
 import { Box } from '@components/style';
 import { ROUTES } from '@routing';
 import { useAppDispatch, useAppSelector } from '@store/hooks';
-import { userSelector } from '@store/selectors';
-import { logoutUser } from '@store/slices/user.slice';
+import { logoutUser, userSelector } from '@store/slices/user.slice';
 
 import { Logo } from './components/Logo';
 

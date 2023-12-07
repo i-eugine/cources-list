@@ -1,19 +1,17 @@
 import React from 'react';
 import { FormProvider } from 'react-hook-form';
-import { useLoaderData, useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { AuthorsService, CoursesService, inject } from '@api';
 import { Button, Card, ConnectedControl, Input, Textarea } from '@components';
 import { Box } from '@components/style/Box';
 import { Flex } from '@components/style/Flex';
-import { LoaderType, getCourseDuration } from '@helpers';
+import { getCourseDuration } from '@helpers';
 import { ICourse } from '@models';
-import { couseInfoLoader } from '@pages/CourseInfo';
-import { ROUTES } from '@routing';
-import { useAppDispatch } from '@store/hooks';
+import { ROUTES, ROUTE_PARAM } from '@routing';
+import { useAppDispatch, useAppSelector } from '@store/hooks';
 import { saveAuthor, deleteAuthor } from '@store/slices/authors.slice';
-import { addCourse, saveCourse } from '@store/slices/courses.slice';
+import { addCourse, courseByIdSelector, saveCourse } from '@store/slices/courses.slice';
 import { Heading3, TextCommon, Heading4, TextBold } from '@styles/typography';
 
 import { AuthorItem } from './components/AuthorItem';
@@ -30,35 +28,20 @@ export const CreateCourse = () => {
 	const navigate = useNavigate();
 	const dispatch = useAppDispatch();
 
-	const course = useLoaderData() as LoaderType<typeof couseInfoLoader>;
+	const id = useParams()[ROUTE_PARAM.courseId];
+	console.log(id);
+	const course = id ? useAppSelector(courseByIdSelector(id)) : null;
 
 	const { methods, duration, courseAuthors, authors, handleAuthorAdd, handleAuthorExclude } =
 		useCreateCourse(course);
 
-	const handleAuthorCreate = async (name) => {
-		const authorsService = inject(AuthorsService);
-		const author = await authorsService.create(name);
-		dispatch(saveAuthor(author));
-	};
+	const handleAuthorCreate = async (name: string) => dispatch(saveAuthor(name));
+	const handleAuthorDelete = async (id: string) => dispatch(deleteAuthor(id));
 
-	const handleAuthorDelete = async (id) => {
-		const authorsService = inject(AuthorsService);
-		await authorsService.delete(id);
-		dispatch(deleteAuthor(id));
-	};
-
-	const handleCourseSubmit = async (form: ICourse) => {
-		const coursesService = inject(CoursesService);
-		if (course) {
-			const resp = await coursesService.update(form);
-			dispatch(saveCourse({ ...resp, authors: form.authors }));
-		} else {
-			const resp = await coursesService.create(form);
-			dispatch(addCourse({ ...resp, authors: form.authors }));
-		}
-
+	const handleCourseSubmit = methods.handleSubmit(async (form: ICourse) => {
+		await dispatch((course ? saveCourse : addCourse)(form));
 		navigate(`/${ROUTES.courses}`);
-	};
+	});
 
 	return (
 		<div>

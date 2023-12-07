@@ -1,40 +1,41 @@
-import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createEntityAdapter, createSlice } from '@reduxjs/toolkit';
 
+import { AuthorsService, inject } from '@api';
 import { IAuthor } from '@models';
+import { RootState } from '@store';
 
-const initialState: IAuthor[] = [];
+const name = 'authors';
 
-let cachedAuthors = [];
+//#region thunk
+export const saveAuthor = createAsyncThunk(`${name}/saveAuthor`, async (name: string) => {
+	const authorsService = inject(AuthorsService);
+	const resp = await authorsService.create(name);
+	return resp.data.result;
+});
+
+export const deleteAuthor = createAsyncThunk(`${name}/deleteAuthor`, async (id: string) => {
+	const authorsService = inject(AuthorsService);
+	await authorsService.delete(id);
+	return id;
+});
+//#endregion
+
+const authors = createEntityAdapter<IAuthor>({ selectId: (a) => a.id });
+
+export const authorsSelector = authors.getSelectors<RootState>((s) => s.authors).selectAll;
 
 const authorsSlice = createSlice({
-	name: 'authors',
-	initialState,
+	name,
+	initialState: authors.getInitialState(),
 	reducers: {
-		getAllAuthors(_, { payload }: PayloadAction<IAuthor[]>) {
-			cachedAuthors = payload;
-			return payload;
-		},
-		resetAuthors() {
-			return [...cachedAuthors];
-		},
-		removeAuthor(state, { payload }: PayloadAction<string>) {
-			return state.filter((a) => a.id !== payload);
-		},
-		// used for API
-		deleteAuthor(state, { payload }: PayloadAction<string>) {
-			return state.filter((a) => a.id !== payload);
-		},
-		addAuthor(state, { payload }: PayloadAction<IAuthor>) {
-			return [...state, payload];
-		},
-		// used for API
-		saveAuthor(state, { payload }: PayloadAction<IAuthor>) {
-			return [...state, payload];
-		},
+		getAllAuthors: authors.setAll,
+	},
+	extraReducers: (builder) => {
+		builder.addCase(saveAuthor.fulfilled, authors.addOne);
+		builder.addCase(deleteAuthor.fulfilled, authors.removeOne);
 	},
 });
 
-export const { getAllAuthors, resetAuthors, removeAuthor, deleteAuthor, addAuthor, saveAuthor } =
-	authorsSlice.actions;
+export const { getAllAuthors } = authorsSlice.actions;
 
 export default authorsSlice.reducer;

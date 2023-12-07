@@ -3,7 +3,7 @@ import { useFieldArray, useForm, useWatch } from 'react-hook-form';
 
 import { IAuthor, ICourse } from '@models';
 import { useAppSelector } from '@store/hooks';
-import { authorsSelector } from '@store/selectors';
+import { authorsSelector } from '@store/slices/authors.slice';
 
 export const AUTHORS_FIELD = 'authors';
 

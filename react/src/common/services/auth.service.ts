@@ -6,9 +6,7 @@ import { API_URL } from './api.config';
 
 export class AuthService {
 	async login(data: ILoginRequest) {
-		const resp = await axios.post(`${API_URL}/login`, { ...data, name: null });
-		localStorage.setItem('token', resp.data.result);
-		return { ...resp.data.user, isAuth: true };
+		return await axios.post(`${API_URL}/login`, { ...data, name: null });
 	}
 
 	register(data: ILoginRequest) {

@@ -4,6 +4,7 @@ import authors from './slices/authors.slice';
 import courses from './slices/courses.slice';
 import user from './slices/user.slice';
 
+// ask about SUspence & Async
 export const reducer = combineReducers({
 	courses,
 	authors,
