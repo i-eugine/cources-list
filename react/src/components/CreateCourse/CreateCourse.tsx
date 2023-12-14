@@ -29,7 +29,6 @@ export const CreateCourse = () => {
 	const dispatch = useAppDispatch();
 
 	const id = useParams()[ROUTE_PARAM.courseId];
-	console.log(id);
 	const course = id ? useAppSelector(courseByIdSelector(id)) : null;
 
 	const { methods, duration, courseAuthors, authors, handleAuthorAdd, handleAuthorExclude } =

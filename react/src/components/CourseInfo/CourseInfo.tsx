@@ -22,7 +22,7 @@ const CourseInfoCardDetails = styled.div`
 const CourseInfoCardLabel = styled(TextBold)`
 	width: 120px;
 `;
-// ask what do thunk abortZ
+
 export const CourseInfo: FC = () => {
 	const navigate = useNavigate();
 	const id = useParams()[ROUTE_PARAM.courseId];
