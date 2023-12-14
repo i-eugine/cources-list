@@ -14,7 +14,9 @@
       "@store/*": ["./store/*"],
 
       "@pages/*": ["./components/*"],
-      "@styles/*": ["./styles/*"]
+      "@styles/*": ["./styles/*"],
+
+      "@test/*": ["./test/*"]
     }
   }
 }

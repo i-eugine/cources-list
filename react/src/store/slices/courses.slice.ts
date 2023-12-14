@@ -4,7 +4,6 @@ import { inject, CoursesService } from '@api';
 import { ICourse, ICourseDTO } from '@models';
 import { RootState } from '@store';
 
-// TODO: add regions
 const name = 'courses';
 
 //#region thunk

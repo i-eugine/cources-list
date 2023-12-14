@@ -38,7 +38,7 @@ export const CourseCard: FC<Props> = ({ course }) => {
 	const handleDelete = () => dispatch(deleteCourse(course.id));
 
 	return (
-		<CardWrapper>
+		<CardWrapper data-testid='course-card'>
 			<Heading4>{course.title}</Heading4>
 
 			<Flex $gap={'xl'} $justifyContent='space-between' $marginTop={'sm'}>

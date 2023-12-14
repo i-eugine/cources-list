@@ -23,7 +23,6 @@ export const Courses: FC = () => {
 	const [search, setSearch] = useState('');
 
 	const courses = useAppSelector(coursesSelector);
-
 	const currentCourses = useMemo(
 		() => (search ? filterCourses(courses, search) : courses),
 		[search, courses]
