@@ -1,6 +1,7 @@
 import React from 'react';
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 
+import { TokenManager } from '@api';
 import { Layout } from '@components';
 import { CourseInfo, couseInfoLoader } from '@pages/CourseInfo';
 import { Courses } from '@pages/Courses';
@@ -63,7 +64,7 @@ export const router = createBrowserRouter([
 				path: '',
 				loader: () =>
 					Promise.allSettled(
-						localStorage.getItem('token')
+						TokenManager.getToken()
 							? [store.dispatch(getData()), store.dispatch(authUser())]
 							: [store.dispatch(getData())]
 					),
