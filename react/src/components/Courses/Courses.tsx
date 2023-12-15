@@ -2,7 +2,7 @@ import React, { FC, useMemo, useState } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
 
 import { Button } from '@components';
-import { Flex } from '@components/style/Flex';
+import { Flex } from '@components/style';
 import { ICourse } from '@models';
 import { ROUTES } from '@routing';
 import { useAppSelector } from '@store/hooks';

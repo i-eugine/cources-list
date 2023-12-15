@@ -2,7 +2,7 @@ import React, { FC, useState } from 'react';
 
 import { Label, Input, Button } from '@components';
 import { Box } from '@components/style';
-import { Flex } from '@components/style/Flex';
+import { Flex } from '@components/style';
 import { IAuthor } from '@models';
 import { Heading5 } from '@styles/typography';
 

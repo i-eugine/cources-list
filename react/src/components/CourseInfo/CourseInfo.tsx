@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { Button, Card } from '@components';
-import { Flex } from '@components/style/Flex';
+import { Flex } from '@components/style';
 import { getCourseDuration } from '@helpers';
 import { ROUTES, ROUTE_PARAM } from '@routing';
 import { useAppSelector } from '@store/hooks';
