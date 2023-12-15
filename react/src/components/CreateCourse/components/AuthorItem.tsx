@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import { useSelector } from 'react-redux';
 
 import { AddIcon, DeleteIcon } from '@components';
-import { Flex } from '@components/style/Flex';
+import { Flex } from '@components/style';
 import { IAuthor } from '@models';
 import { TextCommon } from '@styles/typography';
 

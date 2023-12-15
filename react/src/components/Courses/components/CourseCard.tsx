@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { Button, ButtonIcon, PencilIcon, TrashIcon } from '@components';
-import { Flex } from '@components/style/Flex';
+import { Flex } from '@components/style';
 import { getCourseDuration } from '@helpers';
 import { ICourse } from '@models';
 import { ROUTES } from '@routing';
