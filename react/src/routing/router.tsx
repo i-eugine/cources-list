@@ -3,7 +3,7 @@ import { createBrowserRouter, Navigate } from 'react-router-dom';
 
 import { TokenManager } from '@api';
 import { Layout } from '@components';
-import { CourseInfo, couseInfoLoader } from '@pages/CourseInfo';
+import { CourseInfo } from '@pages/CourseInfo';
 import { Courses } from '@pages/Courses';
 import { CreateCourse } from '@pages/CreateCourse';
 import { EmptyCourseList } from '@pages/EmptyCourseList';
@@ -32,7 +32,6 @@ export const protectedRoutes = [
 	{
 		path: `${ROUTES.courses}/:${ROUTE_PARAM.courseId}/${ROUTES.edit}`,
 		element: <CreateCourse />,
-		loader: couseInfoLoader,
 	},
 	{
 		path: `${ROUTES.courses}/${ROUTES.add}`,
