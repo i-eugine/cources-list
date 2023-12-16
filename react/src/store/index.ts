@@ -6,13 +6,13 @@ import user from './slices/user.slice';
 
 // ask about SUspence & Async
 export const reducer = combineReducers({
-	courses,
-	authors,
-	user,
+  courses,
+  authors,
+  user,
 });
 
 export const store = configureStore({
-	reducer,
+  reducer,
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself

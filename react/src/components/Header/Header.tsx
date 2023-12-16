@@ -11,38 +11,38 @@ import { logoutUser, userSelector } from '@store/slices/user.slice';
 import logo from '../../assets/logo.png';
 
 const HeaderWrapper = styled.div`
-	display: flex;
-	justify-content: space-between;
-	height: 80px;
-	padding: 15px 30px;
-	background-color: var(--white);
-	box-shadow: 1px 1px 4px 0px #00000026;
+  display: flex;
+  justify-content: space-between;
+  height: 80px;
+  padding: 15px 30px;
+  background-color: var(--white);
+  box-shadow: 1px 1px 4px 0px #00000026;
 `;
 
 export const Header = () => {
-	const navigate = useNavigate();
-	const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
-	const user = useAppSelector(userSelector);
+  const user = useAppSelector(userSelector);
 
-	return (
-		<HeaderWrapper>
-			<img alt='logo' src={logo} />
+  return (
+    <HeaderWrapper>
+      <img alt='logo' src={logo} />
 
-			{user.isAuth && (
-				<Box>
-					{user.name || user.email}
-					<Button
-						$marginLeft={'xs'}
-						onClick={() => {
-							dispatch(logoutUser());
-							navigate(`/${ROUTES.login}`);
-						}}
-					>
-						LOGOUT
-					</Button>
-				</Box>
-			)}
-		</HeaderWrapper>
-	);
+      {user.isAuth && (
+        <Box>
+          {user.name || user.email}
+          <Button
+            $marginLeft={'xs'}
+            onClick={() => {
+              dispatch(logoutUser());
+              navigate(`/${ROUTES.login}`);
+            }}
+          >
+            LOGOUT
+          </Button>
+        </Box>
+      )}
+    </HeaderWrapper>
+  );
 };

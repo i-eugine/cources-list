@@ -6,11 +6,11 @@ import { IResponse } from '@models';
 import { API_URL } from './api.config';
 
 export class UserService {
-	async me(): Promise<IUser> {
-		const resp = await axios.get<IResponse<IUser>>(`${API_URL}/users/me`);
+  async me(): Promise<IUser> {
+    const resp = await axios.get<IResponse<IUser>>(`${API_URL}/users/me`);
 
-		const { name, email } = resp.data.result;
+    const { name, email } = resp.data.result;
 
-		return { name, email, isAuth: true };
-	}
+    return { name, email, isAuth: true };
+  }
 }

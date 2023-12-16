@@ -18,61 +18,61 @@ import { ROUTE_PARAM } from './route-param';
 import { ROUTES } from './routes';
 
 export const protectedRoutes = [
-	{
-		path: '',
-		element: <Navigate to={ROUTES.courses} />,
-	},
-	{
-		path: ROUTES.courses,
-		element: <Courses />,
-	},
-	{
-		path: `${ROUTES.courses}/:${ROUTE_PARAM.courseId}`,
-		element: <CourseInfo />,
-	},
-	{
-		path: `${ROUTES.courses}/:${ROUTE_PARAM.courseId}/${ROUTES.edit}`,
-		element: <CreateCourse />,
-	},
-	{
-		path: `${ROUTES.courses}/${ROUTES.add}`,
-		element: <CreateCourse />,
-	},
-	{
-		path: ROUTES.noCourses,
-		element: <EmptyCourseList />,
-	},
+  {
+    path: '',
+    element: <Navigate to={ROUTES.courses} />,
+  },
+  {
+    path: ROUTES.courses,
+    element: <Courses />,
+  },
+  {
+    path: `${ROUTES.courses}/:${ROUTE_PARAM.courseId}`,
+    element: <CourseInfo />,
+  },
+  {
+    path: `${ROUTES.courses}/:${ROUTE_PARAM.courseId}/${ROUTES.edit}`,
+    element: <CreateCourse />,
+  },
+  {
+    path: `${ROUTES.courses}/${ROUTES.add}`,
+    element: <CreateCourse />,
+  },
+  {
+    path: ROUTES.noCourses,
+    element: <EmptyCourseList />,
+  },
 ];
 
 const getRouter = (dispatch: AppDispatch) =>
-	createBrowserRouter([
-		{
-			path: '/',
-			element: <Layout />,
-			children: [
-				{
-					path: '',
-					loader: () =>
-						Promise.allSettled(
-							TokenManager.getToken()
-								? [dispatch(getData()), dispatch(authUser())]
-								: [dispatch(getData())]
-						),
-					children: [...protectedRoutes],
-				},
-				{
-					path: ROUTES.login,
-					element: <Login />,
-				},
-				{
-					path: ROUTES.registration,
-					element: <Registration />,
-				},
-			],
-		},
-	]);
+  createBrowserRouter([
+    {
+      path: '/',
+      element: <Layout />,
+      children: [
+        {
+          path: '',
+          loader: () =>
+            Promise.allSettled(
+              TokenManager.getToken()
+                ? [dispatch(getData()), dispatch(authUser())]
+                : [dispatch(getData())]
+            ),
+          children: [...protectedRoutes],
+        },
+        {
+          path: ROUTES.login,
+          element: <Login />,
+        },
+        {
+          path: ROUTES.registration,
+          element: <Registration />,
+        },
+      ],
+    },
+  ]);
 
 export const Router = () => {
-	const dispatch = useAppDispatch();
-	return <RouterProvider router={getRouter(dispatch)} />;
+  const dispatch = useAppDispatch();
+  return <RouterProvider router={getRouter(dispatch)} />;
 };
