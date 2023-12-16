@@ -12,6 +12,7 @@ export const Login = () => {
 	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
 
+	// todo action router dom
 	const handleFormSubmit = async (data: ILoginRequest) => {
 		await dispatch(loginUser(data));
 		navigate(`/${ROUTES.courses}`);

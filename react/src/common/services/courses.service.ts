@@ -1,50 +1,17 @@
 import axios from 'axios';
 
-import { inject } from '@api';
-import { formatCreationDate } from '@helpers';
-import { ICourse, IResponse, ICourseDTO, IAuthor } from '@models';
+import { ICourse, IResponse, ICourseDTO } from '@models';
 
 import { API_URL } from './api.config';
-import { AuthorsService } from './authors.service';
+
+const courseUrl = `${API_URL}/courses`;
 
 export class CoursesService {
-	private authrors: AuthorsService;
+	all = () => axios.get<IResponse<ICourseDTO[]>>(`${courseUrl}/all`);
 
-	constructor() {
-		this.authrors = inject(AuthorsService);
-	}
+	create = (data: ICourseDTO) => axios.post<IResponse<ICourseDTO>>(`${courseUrl}/add`, data);
 
-	all() {
-		return axios.get<IResponse<ICourseDTO[]>>(`${API_URL}/courses/all`);
-	}
+	update = (data: ICourseDTO) => axios.put<IResponse<ICourseDTO>>(`${courseUrl}/${data.id}`, data);
 
-	async get(id: string) {
-		const [course, authors] = await Promise.all([
-			axios.get<IResponse<ICourseDTO>>(`${API_URL}/courses/${id}`),
-			this.authrors.all(),
-		]);
-
-		return this.mapCourse(course.data.result, authors.data.result);
-	}
-
-	create(data: ICourseDTO) {
-		return axios.post<IResponse<ICourseDTO>>(`${API_URL}/courses/add`, data);
-	}
-	update(data: ICourseDTO) {
-		return axios.put<IResponse<ICourseDTO>>(`${API_URL}/courses/${data.id}`, data);
-	}
-
-	delete(id: string) {
-		return axios.delete<IResponse<ICourse>>(`${API_URL}/authors/${id}`);
-	}
-
-	private mapCourse(course: ICourseDTO, authors: IAuthor[]): ICourse {
-		return {
-			...course,
-			creationDate: formatCreationDate(course.creationDate),
-			authors: course.authors
-				.map((authorId) => authors.find(({ id }) => authorId === id))
-				.filter(Boolean),
-		};
-	}
+	delete = (id: string) => axios.delete<IResponse<ICourse>>(`${courseUrl}/${id}`);
 }

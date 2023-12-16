@@ -7,11 +7,11 @@ const IconWrapper = styled.span`
 	cursor: pointer;
 `;
 
-type Props = {
+type IconProps = {
 	onClick?: () => void;
 };
 
-export const AddIcon: React.FC<Props> = ({ onClick }) => (
+export const AddIcon: React.FC<IconProps> = ({ onClick }) => (
 	<IconWrapper onClick={onClick}>
 		<svg fill='none' height='13' viewBox='0 0 13 13' width='13' xmlns='http://www.w3.org/2000/svg'>
 			<path
@@ -24,7 +24,7 @@ export const AddIcon: React.FC<Props> = ({ onClick }) => (
 		</svg>
 	</IconWrapper>
 );
-export const DeleteIcon: React.FC<Props> = ({ onClick }) => (
+export const DeleteIcon: React.FC<IconProps> = ({ onClick }) => (
 	<IconWrapper onClick={onClick}>
 		<svg fill='none' height='13' viewBox='0 0 13 13' width='13' xmlns='http://www.w3.org/2000/svg'>
 			<g clipPath='url(#clip0_6131_501)'>

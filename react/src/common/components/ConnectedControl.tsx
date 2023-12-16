@@ -12,14 +12,14 @@ const Error = styled(TextCommon)`
 	color: var(--error);
 `;
 
-type Props = {
+type ConnectedControlProps = {
 	label: string;
 	name: string;
 	options?: RegisterOptions;
 	element: JSX.Element;
 };
 
-export const ConnectedControl: FC<Props> = ({ name, label, options, element }) => {
+export const ConnectedControl: FC<ConnectedControlProps> = ({ name, label, options, element }) => {
 	const {
 		register,
 		formState: { errors },

@@ -23,15 +23,14 @@ const CardInfo = styled.div`
 	min-width: 324px;
 `;
 
-interface Props {
+type CourseCardProps = {
 	course: ICourse;
-}
+};
 
 const toCourseUrl = (courseIs: string, isEdit?: boolean) =>
 	`/${ROUTES.courses}/${courseIs}${isEdit ? '/edit' : ''}`;
 
-// ASK why not store.dispatch
-export const CourseCard: FC<Props> = ({ course }) => {
+export const CourseCard: FC<CourseCardProps> = ({ course }) => {
 	const navigate = useNavigate();
 	const dispatch = useAppDispatch();
 

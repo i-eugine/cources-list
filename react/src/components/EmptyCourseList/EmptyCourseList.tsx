@@ -10,9 +10,11 @@ export const EmptyCourseList = () => {
 	return (
 		<PageCentered>
 			<Heading3>Your List Is Empty</Heading3>
+
 			<TextCommon $marginBottom={'md'} $marginTop={'xl'}>
 				Please use ’Add New Course’ button to add your first course
 			</TextCommon>
+
 			<Button onClick={() => navigate(`/${ROUTES.courses}/${ROUTES.add}`)}>ADD NEW COURSE</Button>
 		</PageCentered>
 	);
