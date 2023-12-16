@@ -9,6 +9,7 @@ import { Heading3 } from '@styles/typography';
 export const Registration = () => {
 	const navigate = useNavigate();
 
+	// todo action router dom
 	const handleFormSubmit = async (data) => {
 		const auth = inject(AuthService);
 		await auth.register(data);

@@ -8,11 +8,11 @@ const SearchBarWrapper = styled.form`
 	gap: 12px;
 `;
 
-interface Props {
+type SearchBarProps = {
 	searchHandler: (value: string) => void;
-}
+};
 
-export const SearchBar: FC<Props> = ({ searchHandler }) => {
+export const SearchBar: FC<SearchBarProps> = ({ searchHandler }) => {
 	const [search, setSearch] = useState('');
 
 	return (
