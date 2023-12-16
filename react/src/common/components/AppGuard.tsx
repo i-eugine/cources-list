@@ -5,7 +5,7 @@ import { TokenManager } from '@api';
 import { ROUTES, protectedRoutes } from '@routing';
 
 export const AppGuard = ({ children }) => {
-	const token = TokenManager;
+	const token = TokenManager.getToken();
 	const location = useLocation();
 	const isProtectedRoute = matchRoutes(protectedRoutes, location);
 

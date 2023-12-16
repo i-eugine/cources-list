@@ -28,7 +28,6 @@ export const CreateCourse = () => {
 	const navigate = useNavigate();
 	const dispatch = useAppDispatch();
 
-	// todo move to loader https://stackoverflow.com/questions/75383036/is-there-a-way-to-use-react-redux-dispatch-inside-the-loader-function-of-react-r
 	const id = useParams()[ROUTE_PARAM.courseId];
 	const course = id ? useAppSelector(courseByIdSelector(id)) : null;
 
@@ -38,7 +37,6 @@ export const CreateCourse = () => {
 	const handleAuthorCreate = (name: string) => dispatch(saveAuthor(name));
 	const handleAuthorDelete = (id: string) => dispatch(deleteAuthor(id));
 
-	// todo move to action router dom
 	const handleCourseSubmit = methods.handleSubmit(async (form: ICourse) => {
 		await dispatch((course ? saveCourse : addCourse)(form));
 		navigate(`/${ROUTES.courses}`);

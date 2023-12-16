@@ -1,5 +1,5 @@
 import React from 'react';
-import { createBrowserRouter, Navigate } from 'react-router-dom';
+import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom';
 
 import { TokenManager } from '@api';
 import { Layout } from '@components';
@@ -9,8 +9,9 @@ import { CreateCourse } from '@pages/CreateCourse';
 import { EmptyCourseList } from '@pages/EmptyCourseList';
 import { Login } from '@pages/Login';
 import { Registration } from '@pages/Registration';
+import { AppDispatch } from '@store';
 import { getData } from '@store/common.thunk';
-import { store } from '@store/index';
+import { useAppDispatch } from '@store/hooks';
 import { authUser } from '@store/slices/user.slice';
 
 import { ROUTE_PARAM } from './route-param';
@@ -43,33 +44,35 @@ export const protectedRoutes = [
 	},
 ];
 
-export const unprotectedRoutes = [
-	{
-		path: ROUTES.login,
-		element: <Login />,
-	},
-	{
-		path: ROUTES.registration,
-		element: <Registration />,
-	},
-];
+const getRouter = (dispatch: AppDispatch) =>
+	createBrowserRouter([
+		{
+			path: '/',
+			element: <Layout />,
+			children: [
+				{
+					path: '',
+					loader: () =>
+						Promise.allSettled(
+							TokenManager.getToken()
+								? [dispatch(getData()), dispatch(authUser())]
+								: [dispatch(getData())]
+						),
+					children: [...protectedRoutes],
+				},
+				{
+					path: ROUTES.login,
+					element: <Login />,
+				},
+				{
+					path: ROUTES.registration,
+					element: <Registration />,
+				},
+			],
+		},
+	]);
 
-export const router = createBrowserRouter([
-	{
-		path: '/',
-		element: <Layout />,
-		children: [
-			{
-				path: '',
-				loader: () =>
-					Promise.allSettled(
-						TokenManager.getToken()
-							? [store.dispatch(getData()), store.dispatch(authUser())]
-							: [store.dispatch(getData())]
-					),
-				children: [...protectedRoutes],
-			},
-			...unprotectedRoutes,
-		],
-	},
-]);
+export const Router = () => {
+	const dispatch = useAppDispatch();
+	return <RouterProvider router={getRouter(dispatch)} />;
+};
