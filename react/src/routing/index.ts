@@ -1,3 +1,3 @@
 export * from './routes';
-export * from './router';
+export * from './Router';
 export * from './route-param';

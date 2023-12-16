@@ -32,13 +32,17 @@ export const Header = () => {
 			{user.isAuth && (
 				<Box>
 					{user.name || user.email}
-					<Button $marginLeft={'xs'} onClick={() => dispatch(logoutUser())}>
+					<Button
+						$marginLeft={'xs'}
+						onClick={() => {
+							dispatch(logoutUser());
+							navigate(`/${ROUTES.login}`);
+						}}
+					>
 						LOGOUT
 					</Button>
 				</Box>
 			)}
-
-			{!user.isAuth && <Button onClick={() => navigate(`/${ROUTES.login}`)}>LOGIN</Button>}
 		</HeaderWrapper>
 	);
 };
