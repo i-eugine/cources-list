@@ -4,26 +4,26 @@ import styled from 'styled-components';
 import { Button, Input } from '@components';
 
 const SearchBarWrapper = styled.form`
-	display: flex;
-	gap: 12px;
+  display: flex;
+  gap: 12px;
 `;
 
 type SearchBarProps = {
-	searchHandler: (value: string) => void;
+  searchHandler: (value: string) => void;
 };
 
 export const SearchBar: FC<SearchBarProps> = ({ searchHandler }) => {
-	const [search, setSearch] = useState('');
+  const [search, setSearch] = useState('');
 
-	return (
-		<SearchBarWrapper
-			onSubmit={(e) => {
-				e.preventDefault();
-				searchHandler(search);
-			}}
-		>
-			<Input placeholder='Input text' value={search} onChange={(e) => setSearch(e.target.value)} />
-			<Button type='submit'>SEARCH</Button>
-		</SearchBarWrapper>
-	);
+  return (
+    <SearchBarWrapper
+      onSubmit={(e) => {
+        e.preventDefault();
+        searchHandler(search);
+      }}
+    >
+      <Input placeholder='Input text' value={search} onChange={(e) => setSearch(e.target.value)} />
+      <Button type='submit'>SEARCH</Button>
+    </SearchBarWrapper>
+  );
 };

@@ -3,10 +3,10 @@ import styled from 'styled-components';
 import { Box } from '@components/style';
 
 const typography = (size: string, weight: number, height: string) => styled(Box)`
-	display: inline-block;
-	font-size: ${size};
-	font-weight: ${weight};
-	line-height: ${height};
+  display: inline-block;
+  font-size: ${size};
+  font-weight: ${weight};
+  line-height: ${height};
 `;
 
 export const Heading3 = typography('32px', 700, '30px');

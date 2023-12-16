@@ -12,36 +12,36 @@ import { CourseCard } from './components/CourseCard';
 import { SearchBar } from './components/SearchBar';
 
 const filterCourses = (courses: ICourse[], search) => {
-	const value = search.toLowerCase();
+  const value = search.toLowerCase();
 
-	return courses.filter(({ id, title }) => id === value || title.toLowerCase().includes(value));
+  return courses.filter(({ id, title }) => id === value || title.toLowerCase().includes(value));
 };
 
 export const Courses: FC = () => {
-	const navigate = useNavigate();
+  const navigate = useNavigate();
 
-	const [search, setSearch] = useState('');
+  const [search, setSearch] = useState('');
 
-	const courses = useAppSelector(coursesSelector);
-	const currentCourses = useMemo(
-		() => (search ? filterCourses(courses, search) : courses),
-		[search, courses]
-	);
+  const courses = useAppSelector(coursesSelector);
+  const currentCourses = useMemo(
+    () => (search ? filterCourses(courses, search) : courses),
+    [search, courses]
+  );
 
-	if (!courses.length) {
-		return <Navigate to={`/${ROUTES.noCourses}`} />;
-	}
+  if (!courses.length) {
+    return <Navigate to={`/${ROUTES.noCourses}`} />;
+  }
 
-	return (
-		<Flex $flexDirection='column' $gap={'xl'}>
-			<Flex $justifyContent='space-between'>
-				<SearchBar searchHandler={setSearch} />
+  return (
+    <Flex $flexDirection='column' $gap={'xl'}>
+      <Flex $justifyContent='space-between'>
+        <SearchBar searchHandler={setSearch} />
 
-				<Button onClick={() => navigate(`/${ROUTES.courses}/${ROUTES.add}`)}>ADD NEW COURSE</Button>
-			</Flex>
-			{currentCourses.map((course) => (
-				<CourseCard key={course.id} course={course} />
-			))}
-		</Flex>
-	);
+        <Button onClick={() => navigate(`/${ROUTES.courses}/${ROUTES.add}`)}>ADD NEW COURSE</Button>
+      </Flex>
+      {currentCourses.map((course) => (
+        <CourseCard key={course.id} course={course} />
+      ))}
+    </Flex>
+  );
 };

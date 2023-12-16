@@ -5,17 +5,17 @@ import { TokenManager } from '@api';
 import { ROUTES, protectedRoutes } from '@routing';
 
 export const AppGuard = ({ children }) => {
-	const token = TokenManager.getToken();
-	const location = useLocation();
-	const isProtectedRoute = matchRoutes(protectedRoutes, location);
+  const token = TokenManager.getToken();
+  const location = useLocation();
+  const isProtectedRoute = matchRoutes(protectedRoutes, location);
 
-	if (token && !isProtectedRoute) {
-		return <Navigate to={ROUTES.courses} />;
-	}
+  if (token && !isProtectedRoute) {
+    return <Navigate to={ROUTES.courses} />;
+  }
 
-	if (!token && isProtectedRoute) {
-		return <Navigate to={ROUTES.login} />;
-	}
+  if (!token && isProtectedRoute) {
+    return <Navigate to={ROUTES.login} />;
+  }
 
-	return <>{children}</>;
+  return <>{children}</>;
 };

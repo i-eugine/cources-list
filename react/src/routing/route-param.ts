@@ -1,3 +1,3 @@
 export enum ROUTE_PARAM {
-	courseId = 'courseId',
+  courseId = 'courseId',
 }
