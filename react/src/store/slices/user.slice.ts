@@ -18,6 +18,11 @@ export const authUser = createAsyncThunk(`${name}/authUser`, () => {
 	return userService.me();
 });
 
+export const logoutUser = createAsyncThunk(`${name}/logoutUser`, () => {
+	TokenManager.removeToken();
+	return { ...initialState };
+});
+
 const initialState: IUser = {
 	isAuth: false,
 	name: '',
@@ -34,9 +39,9 @@ const userSlice = createSlice({
 	},
 	extraReducers: (builder) => {
 		builder.addCase(loginUser.fulfilled, (_, { payload }) => payload);
+		builder.addCase(logoutUser.fulfilled, (_, { payload }) => payload);
 		builder.addCase(authUser.fulfilled, (_, { payload }) => payload);
 	},
 });
 
-export const { logoutUser } = userSlice.actions;
 export default userSlice.reducer;

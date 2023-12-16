@@ -8,7 +8,7 @@ import { ROUTES } from '@routing';
 import { useAppDispatch, useAppSelector } from '@store/hooks';
 import { logoutUser, userSelector } from '@store/slices/user.slice';
 
-import { Logo } from './components/Logo';
+import logo from '../../assets/logo.png';
 
 const HeaderWrapper = styled.div`
 	display: flex;
@@ -27,18 +27,12 @@ export const Header = () => {
 
 	return (
 		<HeaderWrapper>
-			<Logo />
+			<img alt='logo' src={logo} />
 
 			{user.isAuth && (
 				<Box>
 					{user.name || user.email}
-					<Button
-						$marginLeft={'xs'}
-						onClick={() => {
-							localStorage.removeItem('token');
-							dispatch(logoutUser());
-						}}
-					>
+					<Button $marginLeft={'xs'} onClick={() => dispatch(logoutUser())}>
 						LOGOUT
 					</Button>
 				</Box>
