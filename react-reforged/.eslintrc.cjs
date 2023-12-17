@@ -1,3 +1,42 @@
+const perfectionist = {
+  'perfectionist/sort-imports': [
+    'error',
+    {
+      groups: [ ['react', 'external'], 'aliases', 'internal'],
+      'newlines-between': 'always',
+      'custom-groups': {
+        value: {
+          react: ['react', 'react-*'],
+          aliases: [ '@modules/**', '@models/**']
+        }
+      }
+    }
+  ],
+
+  'perfectionist/sort-jsx-props': [
+    'error',
+    {
+      groups: ['key', 'className', 'multiline', 'unknown', 'shorthand', 'callback'],
+      'custom-groups': { callback: 'on*', key: 'key', className: 'className' }
+    }
+  ],
+
+  'perfectionist/sort-enums': 'error',
+};
+
+const prettier = {
+  'prettier/prettier': ['error', {
+    printWidth: 100,
+    trailingComma: 'es5',
+    semi: true,
+    jsxSingleQuote: true,
+    singleQuote: true,
+    useTabs: false,
+    endOfLine: 'auto',
+    'max-len': ['error', { code: 100 }]
+  }],
+}
+
 module.exports = {
   root: true,
   env: { browser: true, es2020: true },
@@ -15,46 +54,9 @@ module.exports = {
       'warn',
       { allowConstantExport: true },
     ],
+    ...prettier,
 
-    'prettier/prettier': ['error',{
-      printWidth: 100,
-      trailingComma: 'es5',
-      semi: true,
-      jsxSingleQuote: true,
-      singleQuote: true,
-      useTabs: false,
-      endOfLine: 'auto',
-      'max-len': ['error', { code: 100 }]
-    }],
-
-
-    'perfectionist/sort-imports': [
-      'error',
-      {
-        groups: [
-          ['react', 'external'],
-          'aliases',
-          'internal'
-        ],
-        'newlines-between': 'always',
-        'custom-groups': {
-          value: {
-            react: ['react', 'react-*'],
-            aliases: [ /** TODO */]
-          }
-        }
-      }
-    ],
-
-    'perfectionist/sort-jsx-props': [
-      'error',
-      {
-        groups: ['key', 'multiline', 'unknown', 'shorthand', 'callback'],
-        'custom-groups': { callback: 'on*', key: 'key'}
-      }
-    ],
-
-    'perfectionist/sort-enums': 'error',
+    ...perfectionist,
 
     '@typescript-eslint/no-namespace': 'off',
     'no-duplicate-imports': 'error',
