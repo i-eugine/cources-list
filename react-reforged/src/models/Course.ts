@@ -1,7 +1,6 @@
 import { Author } from './Author';
 
-type ICourseBase<TAuthor> = {
-  id?: string;
+type CourseBase<TAuthor> = {
   title: string;
   description: string;
   creationDate: string;
@@ -9,5 +8,6 @@ type ICourseBase<TAuthor> = {
   authors: TAuthor[];
 };
 
-export type ICourseDTO = ICourseBase<string>;
-export type ICourse = ICourseBase<Author>;
+export type CourseForm = CourseBase<string>;
+export type CourseDTO = CourseBase<string> & { id: string };
+export type Course = CourseBase<Author> & { id: string };

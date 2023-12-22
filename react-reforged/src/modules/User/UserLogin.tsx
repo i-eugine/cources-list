@@ -3,7 +3,7 @@ import { Button } from 'antd';
 import { UserLoginForm } from './components/UserLoginForm';
 import { UserPage } from './components/UserPage';
 
-export const Login = () => {
+export const UserLogin = () => {
   return (
     <UserPage title='Login'>
       <UserLoginForm onSubmit={() => {}}>

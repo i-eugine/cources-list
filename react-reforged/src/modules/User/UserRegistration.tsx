@@ -1,7 +1,7 @@
 import { UserLoginForm } from './components/UserLoginForm';
 import { UserPage } from './components/UserPage';
 
-export const Registration = () => {
+export const UserRegistration = () => {
   return (
     <UserPage title='Registration'>
       <UserLoginForm onSubmit={() => {}}>

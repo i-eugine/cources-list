@@ -7,7 +7,7 @@ const perfectionist = {
       'custom-groups': {
         value: {
           react: ['react', 'react-*'],
-          aliases: [ '@modules/**', '@models/**']
+          aliases: [ '@modules/**', '@models', '@routing/**', '@common/**', '@utils/**' ]
         }
       }
     }
