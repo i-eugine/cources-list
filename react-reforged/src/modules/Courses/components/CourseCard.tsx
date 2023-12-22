@@ -1,8 +1,11 @@
 import { DeleteFilled, EditFilled, FileTextFilled } from '@ant-design/icons';
 import { Button, Card, Tag, Typography } from 'antd';
 import { FC } from 'react';
+import { Link } from 'react-router-dom';
 
-import { ICourse } from '@models/Course';
+import { Course } from '@models';
+import { ROUTES } from '@routing/routes';
+import { getHref } from '@utils/get-href';
 
 const { Title, Text } = Typography;
 
@@ -10,8 +13,18 @@ type ActionProps = { shape: 'circle'; size: 'large'; type: 'primary' };
 const actionStyleProps: ActionProps = { shape: 'circle', size: 'large', type: 'primary' };
 
 type CourseCardProps = {
-  course: ICourse;
+  course: Course;
 };
+
+const getCardNavs = (id: string) =>
+  [
+    { key: 'edit', icon: <EditFilled />, href: getHref(ROUTES.courses, id, ROUTES.edit) },
+    { key: 'info', icon: <FileTextFilled />, href: getHref(ROUTES.courses, id) },
+  ].map((nav) => (
+    <Link to={nav.href}>
+      <Button key={nav.key} icon={nav.icon} {...actionStyleProps} />
+    </Link>
+  ));
 
 export const CourseCard: FC<CourseCardProps> = ({ course }) => {
   return (
@@ -19,8 +32,7 @@ export const CourseCard: FC<CourseCardProps> = ({ course }) => {
       <Card
         actions={[
           <Button key='delete' icon={<DeleteFilled />} {...actionStyleProps} />,
-          <Button key='edit' icon={<EditFilled />} {...actionStyleProps} />,
-          <Button key='info' icon={<FileTextFilled />} {...actionStyleProps} />,
+          ...getCardNavs(course.id),
         ]}
       >
         <div className='flex flex-col gap-3'>

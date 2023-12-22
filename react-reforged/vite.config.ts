@@ -6,7 +6,10 @@ const baseUrl = './src/';
 
 const alias = [
   ['@modules', './modules/'],
-  ['@modules', './modules/'],
+  ['@routing', './routing/'],
+  ['@models', './models'],
+  ['@common', './common/'],
+  ['@utils', './utils/'],
 ].map(([name, path]) => ({ find: name, replacement: resolve(__dirname, baseUrl, path) }));
 
 // https://vitejs.dev/config/

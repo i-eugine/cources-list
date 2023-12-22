@@ -23,7 +23,10 @@
     "baseUrl": "./src",
     "paths": {
       "@modules/*": ["modules/*"],
-      "@models/*": ["models/*"]
+      "@models": ["models"],
+      "@routing/*": ["routing/*"],
+      "@common/*": ["common/*"],
+      "@utils/*": ["utils/*"],
     }
   },
   "include": ["src"],
