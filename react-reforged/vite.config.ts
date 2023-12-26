@@ -10,6 +10,7 @@ const alias = [
   ['@models', './models'],
   ['@common', './common/'],
   ['@utils', './utils/'],
+  ['@store', './store/'],
 ].map(([name, path]) => ({ find: name, replacement: resolve(__dirname, baseUrl, path) }));
 
 // https://vitejs.dev/config/

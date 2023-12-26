@@ -27,6 +27,7 @@
       "@routing/*": ["routing/*"],
       "@common/*": ["common/*"],
       "@utils/*": ["utils/*"],
+      "@store/*": ["store/*"]
     }
   },
   "include": ["src"],
