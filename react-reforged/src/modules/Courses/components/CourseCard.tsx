@@ -1,5 +1,5 @@
-import { DeleteFilled, EditFilled, FileTextFilled } from '@ant-design/icons';
-import { Button, Card, Tag, Typography } from 'antd';
+import { EditFilled, FileTextFilled } from '@ant-design/icons';
+import { Button, Card, Tag, Tooltip, Typography } from 'antd';
 import { FC } from 'react';
 import { Link } from 'react-router-dom';
 
@@ -7,10 +7,9 @@ import { Course } from '@models';
 import { ROUTES } from '@routing/routes';
 import { getHref } from '@utils/get-href';
 
-const { Title, Text } = Typography;
+import { DeleteCourseButton } from './DeleteCourseButton';
 
-type ActionProps = { shape: 'circle'; size: 'large'; type: 'primary' };
-const actionStyleProps: ActionProps = { shape: 'circle', size: 'large', type: 'primary' };
+const { Title, Text } = Typography;
 
 type CourseCardProps = {
   course: Course;
@@ -21,19 +20,18 @@ const getCardNavs = (id: string) =>
     { key: 'edit', icon: <EditFilled />, href: getHref(ROUTES.courses, id, ROUTES.edit) },
     { key: 'info', icon: <FileTextFilled />, href: getHref(ROUTES.courses, id) },
   ].map((nav) => (
-    <Link to={nav.href}>
-      <Button key={nav.key} icon={nav.icon} {...actionStyleProps} />
-    </Link>
+    <Tooltip title={`Navigate to course ${nav.key} page`}>
+      <Link to={nav.href}>
+        <Button key={nav.key} icon={nav.icon} shape='circle' type='primary' />
+      </Link>
+    </Tooltip>
   ));
 
 export const CourseCard: FC<CourseCardProps> = ({ course }) => {
   return (
     <article>
       <Card
-        actions={[
-          <Button key='delete' icon={<DeleteFilled />} {...actionStyleProps} />,
-          ...getCardNavs(course.id),
-        ]}
+        actions={[<DeleteCourseButton key='delete' id={course.id} />, ...getCardNavs(course.id)]}
       >
         <div className='flex flex-col gap-3'>
           <header>
@@ -44,8 +42,8 @@ export const CourseCard: FC<CourseCardProps> = ({ course }) => {
                 Authors:
               </Text>
               <Text>
-                {course.authors.map(({ name }) => (
-                  <Tag>{name}</Tag>
+                {course.authors.map(({ name, id }) => (
+                  <Tag key={id}>{name}</Tag>
                 ))}
               </Text>
             </div>
