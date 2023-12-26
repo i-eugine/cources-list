@@ -1,19 +1,33 @@
-const express = require('express');
+import express, { json } from 'express';
+import { connect, connection } from 'mongoose';
 
-const coursesRoute = require('./routes/courses');
+import coursesRoute from './routes/courses';
+import authorsRoute from './routes/authors.js';
 
 const app = express();
 
-app.use(express.json());
+app.use(json());
 
 app.use('/courses', coursesRoute);
+app.use('/authors', authorsRoute);
 
 app.get('/', (req, res) => {
   res.send('Hello, World!');
 });
 
+const PORT = 3001;
+const startServer = () => {
+  app.listen(PORT)
+  console.log(`App started on port ${PORT}`)
+}
+const connectDb = () => {
+  console.log('connecting to db...')
+  connect('mongodb://localhost/testmongoose');
+  console.log('connected to db')
+  return connection
+}
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.info(`Server running on port ${PORT}`);
-});
+connectDb()
+  .on('error', console.log)
+  .on('disconnected', connectDb)
+  .once('open', startServer);
