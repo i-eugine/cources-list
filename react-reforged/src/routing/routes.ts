@@ -1,6 +1,6 @@
 export enum ROUTES {
-  add = 'add',
   courses = 'courses',
+  create = 'create',
   edit = 'edit',
   login = 'login',
   noCourses = 'no-courses',
