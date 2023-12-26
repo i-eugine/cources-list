@@ -3,4 +3,4 @@ export * from './Author';
 export * from './Course';
 export * from './User';
 
-export * from './api/LoginRequest';
+export * from './api/Login';

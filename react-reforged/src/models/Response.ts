@@ -1,6 +1,4 @@
-// todo: rewrite this interface to type
-
-export type IResponse<T> = {
+export type Resp<T> = {
   successful: boolean;
   result: T;
 };
