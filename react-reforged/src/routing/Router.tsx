@@ -5,6 +5,7 @@ import { loadMainData, userLoader } from '@common/loaders';
 import { CourseInfo, Courses, EditCourse } from '@modules/Courses';
 import { UserLogin, UserRegistration } from '@modules/User';
 import { TokenManager } from '@store/token-manager';
+import { getHref } from '@utils/get-href';
 
 import { ROUTE_PARAM } from './route-param';
 import { ROUTES } from './routes';
@@ -53,18 +54,20 @@ export const router = createBrowserRouter([
   {
     path: '/',
     element: <AppLayout />,
-    loader: async () => {
-      if (!TokenManager.getToken()) {
-        return redirect(ROUTES.login);
-      }
 
-      await Promise.all([loadMainData(), userLoader()]);
-      return null;
-    },
     children: [
       {
         path: '',
         children: [...protectedRoutes],
+        loader: async () => {
+          if (!TokenManager.getToken()) {
+            console.log('redirect');
+            return redirect(getHref(ROUTES.login));
+          }
+
+          await Promise.all([loadMainData(), userLoader()]);
+          return null;
+        },
       },
       ...unprotectedRoutes,
     ],
