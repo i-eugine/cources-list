@@ -1,3 +1,4 @@
+// todo adjust aliases
 const perfectionist = {
   'perfectionist/sort-imports': [
     'error',
@@ -7,7 +8,7 @@ const perfectionist = {
       'custom-groups': {
         value: {
           react: ['react', 'react-*'],
-          aliases: [ '@modules/**', '@models', '@routing/**', '@common/**', '@utils/**' ]
+          aliases: [ '@modules/**', '@models', '@routing/**', '@common/**', '@utils/**', '@store/**' ]
         }
       }
     }
@@ -37,6 +38,7 @@ const prettier = {
   }],
 }
 
+// todo check readme about lint
 module.exports = {
   root: true,
   env: { browser: true, es2020: true },
@@ -58,13 +60,14 @@ module.exports = {
 
     ...perfectionist,
 
+    '@typescript-eslint/no-unused-vars': 'off',
     '@typescript-eslint/no-namespace': 'off',
     'no-duplicate-imports': 'error',
     'no-unused-vars': 'off',
     'unused-imports/no-unused-imports': 'error',
 
     'unused-imports/no-unused-vars': [
-      'warn',
+      'error',
       {
         vars: 'all',
         varsIgnorePattern: '^_',
