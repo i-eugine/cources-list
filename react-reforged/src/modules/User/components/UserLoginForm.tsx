@@ -1,65 +1,89 @@
-import { Button, Card, Input, Typography } from 'antd';
+import { Button, Card, Input } from 'antd';
 import { Form, Formik } from 'formik';
 import { LoginRequest } from 'models';
 import { FC } from 'react';
+import { InferType, object, string } from 'yup';
 
-const { Title } = Typography;
+import { InputField } from '@common/components/InputField';
+
+const userLoginSchema = object().shape({
+  name: string()
+    .min(3, 'Name should be at least 3 characters')
+    .max(50, 'Name should be at most 50 characters'),
+  email: string()
+    .matches(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i, 'Email should be valid')
+    .required('Email is required'),
+  password: string()
+    .min(6, 'Password should be at least 6 characters')
+    .required('Password is required'),
+});
 
 type UserLoginFormProps = {
   withName?: boolean;
+  isLoading?: boolean;
   children?: React.ReactNode | React.ReactNode[];
   onSubmit: (data: LoginRequest) => void | Promise<void>;
 };
 
-export const UserLoginForm: FC<UserLoginFormProps> = ({ withName, children, onSubmit }) => {
+export const UserLoginForm: FC<UserLoginFormProps> = ({
+  withName,
+  children,
+  isLoading,
+  onSubmit,
+}) => {
   return (
     <Card>
-      <Formik<LoginRequest>
+      <Formik<InferType<typeof userLoginSchema>>
         initialValues={{
-          name: '',
           email: '',
           password: '',
         }}
+        validateOnBlur={true}
+        validationSchema={userLoginSchema}
         onSubmit={(data) => onSubmit(data)}
       >
-        {({ handleChange }) => (
-          <Form>
-            {withName && (
-              <>
-                <Title level={5}>Name:</Title>
-                <Input
-                  className='mb-3'
-                  name='title'
-                  placeholder='Enter user title'
-                  onChange={handleChange}
-                />
-              </>
-            )}
-
-            <Title level={5}>Email:</Title>
-            <Input
+        <Form>
+          {withName && (
+            <InputField
               className='mb-3'
-              name='email'
-              placeholder='Enter user email'
-              type='email'
-              onChange={handleChange}
+              Component={Input}
+              disabled={isLoading}
+              name='name'
+              placeholder='Enter user title'
+              title='Name:'
             />
+          )}
 
-            <Title level={5}>Password:</Title>
-            <Input.Password
-              className='mb-5'
-              name='password'
-              placeholder='Enter user password'
-              onChange={handleChange}
-            />
+          <InputField
+            className='mb-3'
+            Component={Input}
+            disabled={isLoading}
+            name='email'
+            placeholder='Enter user email'
+            title='Email:'
+          />
 
-            <div className='flex justify-center'>
-              <Button className='mb-2 w-56' htmlType='submit' size='large' type='primary'>
-                Submit
-              </Button>
-            </div>
-          </Form>
-        )}
+          <InputField
+            className='mb-5'
+            Component={Input.Password}
+            disabled={isLoading}
+            name='password'
+            placeholder='Enter user password'
+            title='Password:'
+          />
+
+          <div className='flex justify-center'>
+            <Button
+              className='mb-2 w-56'
+              htmlType='submit'
+              loading={isLoading}
+              size='large'
+              type='primary'
+            >
+              Submit
+            </Button>
+          </div>
+        </Form>
       </Formik>
 
       {children}
