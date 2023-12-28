@@ -2,7 +2,7 @@ import { useComputed } from '@preact/signals-react';
 import { Transfer, Typography } from 'antd';
 import { Field, FieldProps } from 'formik';
 
-import { FieldErrorMessage } from '@common/components/FieldErrorMessage';
+import { FieldErrorMessage } from '@components';
 import { authors } from '@store/signals';
 
 import { AddAuthorButton } from './AddAuthorButton';

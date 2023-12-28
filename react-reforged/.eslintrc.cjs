@@ -77,6 +77,21 @@ module.exports = {
         args: 'after-used',
         argsIgnorePattern: '^_'
       }
-    ]
+    ],
+
+    "no-restricted-imports": [
+      "error", 
+      {
+      "patterns": [
+        {
+          "group": ["@**/*/*", "[a-zA-Z]**/*/*", "!@modules/**"],
+          "message": "Imports with level 2 or more are not allowed"
+        },
+        {
+          "group": ["../", ],
+          "message": "Parent imports are not allowed"
+        }
+      ]
+    }]
   },
 }

@@ -8,7 +8,6 @@ const alias = [
   ['@modules', './modules/'],
   ['@routing', './routing/'],
   ['@models', './models'],
-  ['@common', './common/'],
   ['@utils', './utils/'],
   ['@store', './store/'],
 

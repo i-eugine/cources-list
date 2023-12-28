@@ -4,7 +4,7 @@ import { LoginRequest } from 'models';
 import { FC } from 'react';
 import { InferType, object, string } from 'yup';
 
-import { InputField } from '@common/components/InputField';
+import { InputField } from '@components';
 
 const userLoginSchema = object().shape({
   name: string()

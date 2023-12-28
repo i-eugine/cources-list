@@ -6,10 +6,12 @@ export const useWithLoading = (): [boolean, WithLoadingFn] => {
   const [loading, setLoading] = useState(false);
 
   const withLoading: WithLoadingFn = async (fnPromise) => {
-    setLoading(true);
-    const resp = await fnPromise;
-    setLoading(false);
-    return resp;
+    try {
+      setLoading(true);
+      return await fnPromise;
+    } finally {
+      setLoading(false);
+    }
   };
 
   return [loading, withLoading];

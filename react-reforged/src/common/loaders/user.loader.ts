@@ -1,4 +1,4 @@
-import { AuthService } from '@common/services';
+import { AuthService } from '@services';
 import { setUser, user } from '@store/signals';
 
 export const userLoader = async () => {

@@ -25,7 +25,6 @@
       "@modules/*": ["modules/*"],
       "@models": ["models"],
       "@routing/*": ["routing/*"],
-      "@common/*": ["common/*"],
       "@utils/*": ["utils/*"],
       "@store/*": ["store/*"],
 

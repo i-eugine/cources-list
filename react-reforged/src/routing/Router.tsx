@@ -1,7 +1,7 @@
 import { createBrowserRouter, Navigate, redirect } from 'react-router-dom';
 
-import { AppLayout } from '@common/components/Layout';
-import { loadMainData, userLoader } from '@common/loaders';
+import { AppLayout, NotFoundPage } from '@components';
+import { loadMainData, userLoader } from '@loaders';
 import { CourseInfo, Courses, EditCourse } from '@modules/Courses';
 import { UserLogin, UserRegistration } from '@modules/User';
 import { TokenManager } from '@store/token-manager';
