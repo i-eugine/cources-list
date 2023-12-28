@@ -1,5 +1,4 @@
 import { Typography } from 'antd';
-import { FC } from 'react';
 
 const { Title } = Typography;
 
@@ -7,7 +6,7 @@ type LogoProps = {
   className?: string;
 };
 
-export const Logo: FC<LogoProps> = () => (
+export const Logo: React.FC<LogoProps> = () => (
   <div className='flex items-center text-zinc-500'>
     <svg
       className='inline-block w-14 h-10'

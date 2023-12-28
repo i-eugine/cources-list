@@ -1,5 +1,4 @@
 import { Button } from 'antd';
-import { FC } from 'react';
 import { Link } from 'react-router-dom';
 
 import { ROUTES } from '@routing/routes';
@@ -15,7 +14,7 @@ type UserNoteProps = {
   action: 'login' | 'register';
 };
 
-export const UserNote: FC<UserNoteProps> = ({ text, action }) => (
+export const UserNote: React.FC<UserNoteProps> = ({ text, action }) => (
   <p className='text-center'>
     {text}
     <Link to={getHref(UserNoteActionMap[action].href)}>

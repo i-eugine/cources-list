@@ -1,7 +1,6 @@
 import { Button, Card, Input } from 'antd';
 import { Form, Formik } from 'formik';
 import { LoginRequest } from 'models';
-import { FC } from 'react';
 import { InferType, object, string } from 'yup';
 
 import { InputField } from '@components';
@@ -25,7 +24,7 @@ type UserLoginFormProps = {
   onSubmit: (data: LoginRequest) => void | Promise<void>;
 };
 
-export const UserLoginForm: FC<UserLoginFormProps> = ({
+export const UserLoginForm: React.FC<UserLoginFormProps> = ({
   withName,
   children,
   isLoading,
