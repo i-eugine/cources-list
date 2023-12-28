@@ -37,6 +37,10 @@ export const protectedRoutes = [
   //   path: ROUTES.noCourses,
   //   element: <EmptyCourseList />,
   // },
+  {
+    path: '*',
+    element: <NotFoundPage />,
+  },
 ];
 
 export const unprotectedRoutes = [
