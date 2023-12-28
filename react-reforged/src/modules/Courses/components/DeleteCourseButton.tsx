@@ -2,9 +2,9 @@ import { DeleteFilled } from '@ant-design/icons';
 import { Tooltip, Button, Modal } from 'antd';
 import { FC } from 'react';
 
-import { useWithLoading } from '@common/hooks/useWithLoading';
-import { MESSAGE_KEYS, withMessage } from '@common/modules/message';
-import { CoursesService } from '@common/services';
+import { withMessage, MESSAGE_KEYS } from '@common-modules/message';
+import { useWithLoading } from '@hooks/useWithLoading';
+import { CoursesService } from '@services';
 
 type DeleteCourseButtonProps = { id: string };
 export const DeleteCourseButton: FC<DeleteCourseButtonProps> = ({ id }) => {

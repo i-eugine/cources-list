@@ -1,32 +1,25 @@
 import { useComputed } from '@preact/signals-react';
-import { useNavigate, useParams } from 'react-router';
+import { useParams } from 'react-router';
 
-import { Course, CourseEditForm } from '@models';
+import { CourseEditForm } from '@models';
 import { ROUTE_PARAM } from '@routing/route-param';
-import { ROUTES } from '@routing/routes';
 import { courses } from '@store/signals';
-import { getHref } from '@utils/get-href';
 
-export const useSelectedCourseInfo = () => {
-  const navigate = useNavigate();
+const useSelectedCourse = () => {
   const params = useParams();
   const courseId = params[ROUTE_PARAM.courseId];
+  return useComputed(() => courses.value.find((c) => c.id === courseId));
+};
 
-  if (!courseId) {
-    navigate(getHref(ROUTES.courses));
-  }
-
-  const course = useComputed(() => courses.value.find((c) => c.id === courseId));
-
-  if (!course.value) {
-    navigate(getHref(ROUTES.courses));
-  }
-
-  return course.value as Course;
+export const useSelectedCourseInfo = () => {
+  const course = useSelectedCourse();
+  return course.value;
 };
 
 export const useSelectedCourseForm = () => {
-  const course = useSelectedCourseInfo();
+  const course = useSelectedCourse();
 
-  return { ...course, authors: course.authors.map((a) => a.id) } as CourseEditForm;
+  return course.value
+    ? ({ ...course.value, authors: course.value.authors.map((a) => a.id) } as CourseEditForm)
+    : null;
 };
