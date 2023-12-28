@@ -9,7 +9,7 @@ axios.interceptors.request.use((config) => {
 });
 
 axios.interceptors.response.use(null, (error) => {
-  if (error.response.status === 401) {
+  if (error.response?.status === 401) {
     TokenManager.removeToken();
     window.location.href = '/';
   }

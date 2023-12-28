@@ -1,5 +1,5 @@
-import { CoursesService, AuthorsService } from '@common/services';
 import { Author } from '@models';
+import { AuthorsService, CoursesService } from '@services';
 import { courses, setAuthors, setCourses } from '@store/signals';
 
 export const loadMainData = async () => {

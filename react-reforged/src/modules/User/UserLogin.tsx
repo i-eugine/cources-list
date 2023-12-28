@@ -1,9 +1,9 @@
 import { useNavigate } from 'react-router';
 
-import { useWithLoading } from '@common/hooks/useWithLoading';
-import { MESSAGE_KEYS, withMessage } from '@common/modules/message';
-import { AuthService } from '@common/services';
+import { withMessage, MESSAGE_KEYS } from '@common-modules/message';
+import { useWithLoading } from '@hooks/useWithLoading';
 import { ROUTES } from '@routing/routes';
+import { AuthService } from '@services';
 import { setUser } from '@store/signals';
 import { TokenManager } from '@store/token-manager';
 import { getHref } from '@utils/get-href';

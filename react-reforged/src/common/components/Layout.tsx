@@ -1,7 +1,7 @@
 import { ConfigProvider, Layout } from 'antd';
 import { Outlet } from 'react-router-dom';
 
-import { MessageProvider } from '@common/modules/message';
+import { MessageProvider } from '@common-modules/message';
 
 import { Header } from './Header';
 

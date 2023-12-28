@@ -4,10 +4,10 @@ import { Formik } from 'formik';
 import { FC, useState } from 'react';
 import { InferType, object, string } from 'yup';
 
-import { InputField } from '@common/components/InputField';
-import { useWithLoading } from '@common/hooks/useWithLoading';
-import { MESSAGE_KEYS, withMessage } from '@common/modules/message';
-import { AuthorsService } from '@common/services';
+import { withMessage, MESSAGE_KEYS } from '@common-modules/message';
+import { InputField } from '@components';
+import { useWithLoading } from '@hooks/useWithLoading';
+import { AuthorsService } from '@services';
 import { addAuthor } from '@store/signals';
 
 const { Title } = Typography;
