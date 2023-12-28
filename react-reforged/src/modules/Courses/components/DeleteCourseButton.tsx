@@ -4,6 +4,7 @@ import { Tooltip, Button, Modal } from 'antd';
 import { withMessage, MESSAGE_KEYS } from '@common-modules/message';
 import { useWithLoading } from '@hooks/useWithLoading';
 import { CoursesService } from '@services';
+import { courses } from '@store/signals';
 
 type DeleteCourseButtonProps = { id: string };
 export const DeleteCourseButton: React.FC<DeleteCourseButtonProps> = ({ id }) => {
@@ -11,6 +12,7 @@ export const DeleteCourseButton: React.FC<DeleteCourseButtonProps> = ({ id }) =>
 
   const onDelete = async () => {
     await withMessage(MESSAGE_KEYS.COURSE_DELETE, withLoading(CoursesService.delete(id)));
+    courses.value = courses.value.filter((c) => c.id !== id);
   };
 
   return (

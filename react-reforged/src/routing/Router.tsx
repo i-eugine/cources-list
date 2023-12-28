@@ -3,6 +3,7 @@ import { createBrowserRouter, Navigate, redirect } from 'react-router-dom';
 import { AppLayout, NotFoundPage } from '@components';
 import { loadMainData, userLoader } from '@loaders';
 import { CourseInfo, Courses, EditCourse } from '@modules/Courses';
+import { EmptyCourseList } from '@modules/Courses/EmptyCourseList';
 import { UserLogin, UserRegistration } from '@modules/User';
 import { TokenManager } from '@store/token-manager';
 import { getHref } from '@utils/get-href';
@@ -10,6 +11,7 @@ import { getHref } from '@utils/get-href';
 import { ROUTE_PARAM } from './route-param';
 import { ROUTES } from './routes';
 
+// TODO REMOVE SIGNALS NOT WORKING
 export const protectedRoutes = [
   {
     path: '',
@@ -31,12 +33,10 @@ export const protectedRoutes = [
     path: `${ROUTES.courses}/${ROUTES.create}`,
     element: <EditCourse />,
   },
-  // todo add 404
-  // TODO: add empty course list
-  // {
-  //   path: ROUTES.noCourses,
-  //   element: <EmptyCourseList />,
-  // },
+  {
+    path: ROUTES.noCourses,
+    element: <EmptyCourseList />,
+  },
   {
     path: '*',
     element: <NotFoundPage />,
