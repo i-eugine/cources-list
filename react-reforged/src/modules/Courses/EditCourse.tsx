@@ -3,12 +3,11 @@ import { Button, Card, Divider, Input, Typography } from 'antd';
 import { Form, Formik } from 'formik';
 import { array, number, object, string } from 'yup';
 
-import { BackButton } from '@common/components/BackButton';
-import { InputField } from '@common/components/InputField';
-import { useWithLoading } from '@common/hooks/useWithLoading';
-import { MESSAGE_KEYS, withMessage } from '@common/modules/message';
-import { CoursesService } from '@common/services';
+import { withMessage, MESSAGE_KEYS } from '@common-modules/message';
+import { InputField, BackButton } from '@components';
+import { useWithLoading } from '@hooks/useWithLoading';
 import { Author, CourseCreateForm, CourseEditForm } from '@models';
+import { CoursesService } from '@services';
 import { addCourse, authors } from '@store/signals';
 
 import { AuthorFormSection } from './components/AuthorFormSection';
@@ -33,6 +32,8 @@ const courseSchema = object().shape({
 });
 
 const a = array().of(string()).min(1, 'at least 1');
+
+// TODO: check PWA
 // TODO: add delete modal for author
 export const EditCourse = () => {
   const [isLoading, withLoading] = useWithLoading();
