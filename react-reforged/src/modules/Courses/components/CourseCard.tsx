@@ -1,6 +1,5 @@
 import { EditFilled, FileTextFilled } from '@ant-design/icons';
 import { Button, Card, Tag, Tooltip, Typography } from 'antd';
-import { FC } from 'react';
 import { Link } from 'react-router-dom';
 
 import { Course } from '@models';
@@ -20,14 +19,14 @@ const getCardNavs = (id: string) =>
     { key: 'edit', icon: <EditFilled />, href: getHref(ROUTES.courses, id, ROUTES.edit) },
     { key: 'info', icon: <FileTextFilled />, href: getHref(ROUTES.courses, id) },
   ].map((nav) => (
-    <Tooltip title={`Navigate to course ${nav.key} page`}>
+    <Tooltip key={nav.key} title={`Navigate to course ${nav.key} page`}>
       <Link to={nav.href}>
-        <Button key={nav.key} icon={nav.icon} shape='circle' type='primary' />
+        <Button icon={nav.icon} shape='circle' type='primary' />
       </Link>
     </Tooltip>
   ));
 
-export const CourseCard: FC<CourseCardProps> = ({ course }) => {
+export const CourseCard: React.FC<CourseCardProps> = ({ course }) => {
   return (
     <article>
       <Card

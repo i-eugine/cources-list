@@ -1,13 +1,12 @@
 import { DeleteFilled } from '@ant-design/icons';
 import { Tooltip, Button, Modal } from 'antd';
-import { FC } from 'react';
 
 import { withMessage, MESSAGE_KEYS } from '@common-modules/message';
 import { useWithLoading } from '@hooks/useWithLoading';
 import { CoursesService } from '@services';
 
 type DeleteCourseButtonProps = { id: string };
-export const DeleteCourseButton: FC<DeleteCourseButtonProps> = ({ id }) => {
+export const DeleteCourseButton: React.FC<DeleteCourseButtonProps> = ({ id }) => {
   const [isLoading, withLoading] = useWithLoading();
 
   const onDelete = async () => {

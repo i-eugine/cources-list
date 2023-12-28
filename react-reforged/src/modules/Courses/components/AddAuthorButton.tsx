@@ -1,7 +1,7 @@
 import { PlusOutlined } from '@ant-design/icons';
 import { Button, Input, Modal, Tooltip, Typography } from 'antd';
 import { Formik } from 'formik';
-import { FC, useState } from 'react';
+import { useState } from 'react';
 import { InferType, object, string } from 'yup';
 
 import { withMessage, MESSAGE_KEYS } from '@common-modules/message';
@@ -21,7 +21,7 @@ const authorNameSchema = object().shape({
 type AuthorForm = InferType<typeof authorNameSchema>;
 
 type AddAuthorButtonProps = { className?: string };
-export const AddAuthorButton: FC<AddAuthorButtonProps> = ({ className }) => {
+export const AddAuthorButton: React.FC<AddAuthorButtonProps> = ({ className }) => {
   const [open, setOpen] = useState(false);
   const [isLoading, withLoading] = useWithLoading();
 

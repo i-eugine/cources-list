@@ -1,5 +1,4 @@
 import { Typography } from 'antd';
-import { FC } from 'react';
 
 const { Title } = Typography;
 
@@ -11,7 +10,7 @@ type UserPageProps = {
 const dimentionsClass = 'h-full w-[480px] xl:w-[768px] pb-16 m-auto';
 const alignCenterClass = 'flex flex-col align-center justify-center';
 
-export const UserPage: FC<UserPageProps> = ({ title, children }) => (
+export const UserPage: React.FC<UserPageProps> = ({ title, children }) => (
   <div className={`${dimentionsClass} ${alignCenterClass}`}>
     <Title className='text-center' level={2}>
       {title}

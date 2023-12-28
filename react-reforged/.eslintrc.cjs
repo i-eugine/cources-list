@@ -1,4 +1,3 @@
-// todo adjust aliases
 const perfectionist = {
   'perfectionist/sort-imports': [
     'error',
@@ -41,7 +40,6 @@ const prettier = {
   }],
 }
 
-// todo check readme about lint
 module.exports = {
   root: true,
   env: { browser: true, es2020: true },
@@ -49,6 +47,7 @@ module.exports = {
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:react-hooks/recommended',
+    'plugin:react/jsx-runtime',
     'prettier'
   ],
   ignorePatterns: ['dist', '.eslintrc.cjs'],
@@ -79,19 +78,25 @@ module.exports = {
       }
     ],
 
-    "no-restricted-imports": [
-      "error", 
+    'no-restricted-imports': [
+      'error', 
       {
-      "patterns": [
-        {
-          "group": ["@**/*/*", "[a-zA-Z]**/*/*", "!@modules/**"],
-          "message": "Imports with level 2 or more are not allowed"
-        },
-        {
-          "group": ["../", ],
-          "message": "Parent imports are not allowed"
-        }
-      ]
-    }]
+        patterns: [
+          {
+            group: ['@**/*/*', '[a-zA-Z]**/*/*', '!@modules/**'],
+            message: 'Imports with level 2 or more are not allowed'
+          },
+          {
+            group: ['../', ],
+            message: 'Parent imports are not allowed'
+          }
+        ],
+        paths: [{
+          name: 'react',
+          importNames: ['React', 'FC'],
+          message: 'No need to import React in 18 version.'
+        }]
+      }
+    ]
   },
 }

@@ -1,6 +1,5 @@
 import { Input, Typography } from 'antd';
 import { Field, FieldProps } from 'formik';
-import { FC } from 'react';
 
 import { FieldErrorMessage } from './FieldErrorMessage';
 
@@ -29,7 +28,12 @@ interface TextAreaProps extends BaseFieldProps {
 
 type InputFieldProps = InputProps | PasswordProps | TextAreaProps;
 
-export const InputField: FC<InputFieldProps> = ({ className, Component, title, ...props }) => {
+export const InputField: React.FC<InputFieldProps> = ({
+  className,
+  Component,
+  title,
+  ...props
+}) => {
   return (
     <Field name={props.name}>
       {({ field, meta: { error, touched } }: FieldProps) => (
