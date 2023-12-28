@@ -1,6 +1,6 @@
 import { Card, Tag, Typography } from 'antd';
 
-import { BackButton } from '@common/components/BackButton';
+import { NotFoundPage, BackButton } from '@components';
 
 import { useSelectedCourseInfo } from './hooks/useSelectedCourse.hook';
 
@@ -8,6 +8,10 @@ const { Title, Text } = Typography;
 
 export const CourseInfo: React.FC = () => {
   const course = useSelectedCourseInfo();
+
+  if (!course) {
+    return <NotFoundPage />;
+  }
 
   return (
     <div className='max-w-screen-lg m-auto'>
