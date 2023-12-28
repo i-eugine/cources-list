@@ -11,6 +11,12 @@ const alias = [
   ['@common', './common/'],
   ['@utils', './utils/'],
   ['@store', './store/'],
+
+  ['@components', './common/components/'],
+  ['@hooks', './common/hooks/'],
+  ['@loaders', './common/loaders/'],
+  ['@common-modules', './common/modules/'],
+  ['@services', './common/services/'],
 ].map(([name, path]) => ({ find: name, replacement: resolve(__dirname, baseUrl, path) }));
 
 // https://vitejs.dev/config/
