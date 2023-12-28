@@ -27,7 +27,13 @@
       "@routing/*": ["routing/*"],
       "@common/*": ["common/*"],
       "@utils/*": ["utils/*"],
-      "@store/*": ["store/*"]
+      "@store/*": ["store/*"],
+
+      "@components": ["common/components"],
+      "@hooks/*": ["common/hooks/*"],
+      "@loaders": ["common/loaders"],
+      "@common-modules/*": ["common/modules/*"],
+      "@services": ["common/services"],
     }
   },
   "include": ["src"],
