@@ -1,6 +1,5 @@
 import { action, observable } from 'mobx';
 
-import { withMessage, MESSAGE_KEYS } from '@common-modules/message';
 import { Course } from '@models';
 import { CoursesService } from '@services';
 
@@ -16,7 +15,7 @@ class CoursesStore {
   }
 
   @action.bound async deleteCourse(id: string) {
-    await withMessage(MESSAGE_KEYS.COURSE_DELETE, CoursesService.delete(id));
+    await CoursesService.delete(id);
     this.courses = this.courses.filter((c) => c.id !== id);
   }
 

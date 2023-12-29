@@ -4,7 +4,6 @@ import { Form, Formik } from 'formik';
 import { observer } from 'mobx-react-lite';
 import { array, number, object, string } from 'yup';
 
-import { withMessage, MESSAGE_KEYS } from '@common-modules/message';
 import { InputField, BackButton } from '@components';
 import { useWithLoading } from '@hooks/useWithLoading';
 import { Author, CourseCreateForm, CourseEditForm } from '@models';
@@ -45,7 +44,7 @@ export const EditCourse = observer(function EditCourse() {
       ? CoursesService.update(data as CourseEditForm)
       : CoursesService.create(data as CourseCreateForm);
 
-    const resp = await withMessage(MESSAGE_KEYS.AUTHOR_CREATE, withLoading(courseRequest));
+    const resp = await withLoading(courseRequest);
 
     coursesStore.addCourse({
       ...resp.data.result,

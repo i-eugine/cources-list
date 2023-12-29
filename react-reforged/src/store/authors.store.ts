@@ -1,6 +1,5 @@
 import { action, computed, observable } from 'mobx';
 
-import { MESSAGE_KEYS, withMessage } from '@common-modules/message';
 import { Author } from '@models';
 import { AuthorsService } from '@services';
 
@@ -20,7 +19,7 @@ class AuthorsStore {
   }
 
   @action.bound async deleteAuthor(id: string) {
-    await withMessage(MESSAGE_KEYS.AUTHOR_DELETE, AuthorsService.delete(id));
+    await AuthorsService.delete(id);
     this.authors = this.authors.filter((c) => c.id !== id);
   }
 }

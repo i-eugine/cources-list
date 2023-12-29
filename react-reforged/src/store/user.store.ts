@@ -23,6 +23,6 @@ class UserStore {
     this.user = null;
   }
 }
-export const userStore = new UserStore();
 
-(window as any).userStore = userStore;
+
+export const userStore = new UserStore();

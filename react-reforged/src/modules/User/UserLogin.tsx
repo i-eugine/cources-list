@@ -1,7 +1,6 @@
 import { observer } from 'mobx-react-lite';
 import { useNavigate } from 'react-router';
 
-import { withMessage, MESSAGE_KEYS } from '@common-modules/message';
 import { useWithLoading } from '@hooks/useWithLoading';
 import { ROUTES } from '@routing/routes';
 import { AuthService } from '@services';
@@ -22,10 +21,7 @@ export const UserLogin = observer(function UserLogin() {
       <UserLoginForm
         isLoading={isLoading}
         onSubmit={async (data) => {
-          const resp = await withMessage(
-            MESSAGE_KEYS.USER_LOGIN,
-            withLoading(AuthService.login(data))
-          );
+          const resp = await withLoading(AuthService.login(data));
 
           TokenManager.setToken(resp.data.result);
           navigate(getHref(ROUTES.courses));

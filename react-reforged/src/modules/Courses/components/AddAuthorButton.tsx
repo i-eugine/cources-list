@@ -4,7 +4,6 @@ import { Formik } from 'formik';
 import { useState } from 'react';
 import { InferType, object, string } from 'yup';
 
-import { withMessage, MESSAGE_KEYS } from '@common-modules/message';
 import { InputField } from '@components';
 import { useWithLoading } from '@hooks/useWithLoading';
 import { AuthorsService } from '@services';
@@ -28,10 +27,7 @@ export const AddAuthorButton: React.FC<AddAuthorButtonProps> = ({ className }) =
   const showModal = () => setOpen(true);
 
   const onSubmit = async ({ authorName }: AuthorForm) => {
-    const resp = await withMessage(
-      MESSAGE_KEYS.AUTHOR_CREATE,
-      withLoading(AuthorsService.create(authorName))
-    );
+    const resp = await withLoading(AuthorsService.create(authorName));
     authorsStore.addAuthor(resp.data.result);
     handleCancel();
   };
