@@ -1,11 +1,11 @@
 import { AuthService } from '@services';
-import { setUser, user } from '@store/signals';
+import { userStore } from '@store/user.store';
 
 export const userLoader = async () => {
-  if (user.value) {
+  if (userStore.user) {
     return;
   }
 
   const resp = await AuthService.me();
-  setUser(resp.data.result);
+  userStore.setUser(resp.data.result);
 };

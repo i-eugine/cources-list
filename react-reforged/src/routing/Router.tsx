@@ -65,7 +65,6 @@ export const router = createBrowserRouter([
         children: [...protectedRoutes],
         loader: async () => {
           if (!TokenManager.getToken()) {
-            console.log('redirect');
             return redirect(getHref(ROUTES.login));
           }
 

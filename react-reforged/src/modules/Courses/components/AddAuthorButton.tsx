@@ -8,7 +8,7 @@ import { withMessage, MESSAGE_KEYS } from '@common-modules/message';
 import { InputField } from '@components';
 import { useWithLoading } from '@hooks/useWithLoading';
 import { AuthorsService } from '@services';
-import { addAuthor } from '@store/signals';
+import { authorsStore } from '@store/authors.store';
 
 const { Title } = Typography;
 
@@ -32,7 +32,7 @@ export const AddAuthorButton: React.FC<AddAuthorButtonProps> = ({ className }) =
       MESSAGE_KEYS.AUTHOR_CREATE,
       withLoading(AuthorsService.create(authorName))
     );
-    addAuthor(resp.data.result);
+    authorsStore.addAuthor(resp.data.result);
     handleCancel();
   };
 
@@ -58,16 +58,6 @@ export const AddAuthorButton: React.FC<AddAuthorButtonProps> = ({ className }) =
               }}
             />
           </Tooltip>
-          <Button
-            className={className}
-            icon={<PlusOutlined />}
-            shape='circle'
-            size='middle'
-            onClick={() => {
-              resetForm();
-              showModal();
-            }}
-          />
           <Modal
             confirmLoading={isLoading}
             maskClosable={false}
