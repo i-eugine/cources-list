@@ -1,4 +1,4 @@
-import react from '@vitejs/plugin-react-swc';
+import react from '@vitejs/plugin-react';
 import { resolve } from 'path';
 import { defineConfig } from 'vite';
 
@@ -20,6 +20,12 @@ const alias = [
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react()],
+  plugins: [
+    react({
+      babel: {
+        plugins: [['@babel/plugin-proposal-decorators', { version: '2023-05' }]],
+      },
+    }),
+  ],
   resolve: { alias },
 });
