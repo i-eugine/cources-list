@@ -30,10 +30,16 @@ class CoursesStore {
   }
 
   @action.bound async ediitCourse(data: CourseEditForm) {
-    await CoursesService.update(data);
+    const resp = await CoursesService.update(data);
+
+    // if (index !== -1) {
+    //   this.courses = this.courses.toSpliced(index, 0, mapCourse(resp.data.result));
+    // }
 
     const index = this.courses.findIndex((c) => c.id === data.id);
-    index !== -1 && this.courses.with(index, mapCourse(data));
+    if (index !== -1) {
+      this.courses = this.courses.toSpliced(index, 1, mapCourse(resp.data.result));
+    }
   }
 
   @action.bound async deleteCourse(id: string) {
