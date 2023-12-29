@@ -11,7 +11,6 @@ import { getHref } from '@utils/get-href';
 import { ROUTE_PARAM } from './route-param';
 import { ROUTES } from './routes';
 
-// TODO REMOVE SIGNALS NOT WORKING
 export const protectedRoutes = [
   {
     path: '',
