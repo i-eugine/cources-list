@@ -91,12 +91,25 @@ module.exports = {
             message: 'Parent imports are not allowed'
           }
         ],
-        paths: [{
-          name: 'react',
-          importNames: ['React', 'FC'],
-          message: 'No need to import React in 18 version.'
-        }]
+        paths: [
+          {
+            name: 'react',
+            importNames: ['React', 'FC'],
+            message: 'No need to import React in 18 version.'
+          },
+          
+        ]
       }
-    ]
+    ],
+
+
+    // using mobx stores directly in template brokes rerendering
+    "no-restricted-syntax": [
+      "error",
+      {
+        selector: "MemberExpression[property.type='Identifier'][property.name!='length'][object.name=/.*Store.*/]",
+        message: "Direct access Stores allowed. Use destructuring instead.",
+      },
+    ],
   },
 }

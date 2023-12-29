@@ -3,8 +3,6 @@ import { useNavigate } from 'react-router';
 
 import { useWithLoading } from '@hooks/useWithLoading';
 import { ROUTES } from '@routing/routes';
-import { AuthService } from '@services';
-import { TokenManager } from '@store/token-manager';
 import { userStore } from '@store/user.store';
 import { getHref } from '@utils/get-href';
 
@@ -13,6 +11,7 @@ import { UserNote } from './components/UserNote';
 import { UserPage } from './components/UserPage';
 
 export const UserLogin = observer(function UserLogin() {
+  const { login } = userStore;
   const [isLoading, withLoading] = useWithLoading();
   const navigate = useNavigate();
 
@@ -21,11 +20,8 @@ export const UserLogin = observer(function UserLogin() {
       <UserLoginForm
         isLoading={isLoading}
         onSubmit={async (data) => {
-          const resp = await withLoading(AuthService.login(data));
-
-          TokenManager.setToken(resp.data.result);
+          await withLoading(login(data));
           navigate(getHref(ROUTES.courses));
-          userStore.setUser(resp.data.user);
         }}
       >
         <UserNote action='register' text="If you don't have an account you may" />

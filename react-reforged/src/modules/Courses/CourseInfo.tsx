@@ -37,10 +37,13 @@ export const CourseInfo: React.FC = observer(function CourseInfo() {
                 ),
               },
               { label: 'Created:', value: course.creationDate },
-              { label: 'Authors:', value: course.authors.map(({ name }) => <Tag>{name}</Tag>) },
+              {
+                label: 'Authors:',
+                value: course.authors.map(({ name, id }) => <Tag key={id}>{name}</Tag>),
+              },
             ].map(({ label, value }, i) => (
-              <div className='my-5'>
-                <Text key={i} className='inline-block w-16' strong>
+              <div key={i} className='my-5'>
+                <Text className='inline-block w-16' strong>
                   {label}
                 </Text>
                 <Text>{value}</Text>

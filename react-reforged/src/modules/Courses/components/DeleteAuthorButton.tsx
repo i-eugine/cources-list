@@ -5,8 +5,10 @@ type DeleteAuthorButtonProps = {
   id: string;
 };
 export const DeleteAuthorButton: React.FC<DeleteAuthorButtonProps> = ({ id }) => {
+  const { deleteAuthor } = authorsStore;
+
   const onDelete = async () => {
-    authorsStore.deleteAuthor(id);
+    deleteAuthor(id);
   };
 
   return <DeleteButton entityName='author' size='small' onDelete={onDelete} />;

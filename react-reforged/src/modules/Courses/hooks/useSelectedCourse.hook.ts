@@ -5,9 +5,11 @@ import { ROUTE_PARAM } from '@routing/route-param';
 import { coursesStore } from '@store/courses.store';
 
 export const useSelectedCourse = () => {
+  const { getCourse } = coursesStore;
+
   const params = useParams();
   const courseId = params[ROUTE_PARAM.courseId];
-  return coursesStore.getCourse(courseId);
+  return getCourse(courseId);
 };
 
 export const useSelectedCourseForm = () => {

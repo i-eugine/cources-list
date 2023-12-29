@@ -14,8 +14,9 @@ class AuthorsStore {
     this.authors = authors;
   }
 
-  @action.bound addAuthor(author: Author) {
-    this.authors = [...this.authors, author];
+  @action.bound async addAuthor(authorName: string) {
+    const resp = await AuthorsService.create(authorName);
+    this.authors = [...this.authors, resp.data.result];
   }
 
   @action.bound async deleteAuthor(id: string) {

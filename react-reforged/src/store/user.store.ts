@@ -1,6 +1,7 @@
 import { action, observable, reaction } from 'mobx';
 
-import { User } from '@models';
+import { LoginRequest, User } from '@models';
+import { AuthService } from '@services';
 
 import { TokenManager } from './token-manager';
 
@@ -14,15 +15,21 @@ class UserStore {
     );
   }
 
-  @action.bound setUser(u: User | null) {
-    this.user = u;
-    console.log(this.user);
+  @action.bound async login(data: LoginRequest) {
+    const resp = await AuthService.login(data);
+
+    TokenManager.setToken(resp.data.result);
+    this.user = resp.data.user;
+  }
+
+  @action.bound async fetchUser() {
+    const resp = await AuthService.me();
+    this.user = resp.data.result;
   }
 
   @action.bound logoutUser() {
     this.user = null;
   }
 }
-
 
 export const userStore = new UserStore();
