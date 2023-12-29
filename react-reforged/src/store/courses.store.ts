@@ -1,7 +1,20 @@
 import { action, observable } from 'mobx';
 
-import { Course } from '@models';
+import { Author, Course, CourseCreateForm, CourseDTO, CourseEditForm } from '@models';
 import { CoursesService } from '@services';
+
+import { authorsStore } from './authors.store';
+
+const mapCourse = (course: CourseDTO): Course => {
+  const { authors } = authorsStore;
+
+  return {
+    ...course,
+    authors: course.authors
+      .map((id) => authors.find((a) => a.id === id))
+      .filter(Boolean) as Author[],
+  };
+};
 
 class CoursesStore {
   @observable accessor courses: Course[] = [];
@@ -10,8 +23,17 @@ class CoursesStore {
     this.courses = courses;
   }
 
-  @action.bound addCourse(course: Course) {
-    this.courses = [...this.courses, course];
+  @action.bound async addCourse(data: CourseCreateForm) {
+    const resp = await CoursesService.create(data);
+
+    this.courses = [...this.courses, mapCourse(resp.data.result)];
+  }
+
+  @action.bound async ediitCourse(data: CourseEditForm) {
+    await CoursesService.update(data);
+
+    const index = this.courses.findIndex((c) => c.id === data.id);
+    index !== -1 && this.courses.with(index, mapCourse(data));
   }
 
   @action.bound async deleteCourse(id: string) {

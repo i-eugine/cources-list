@@ -6,7 +6,6 @@ import { InferType, object, string } from 'yup';
 
 import { InputField } from '@components';
 import { useWithLoading } from '@hooks/useWithLoading';
-import { AuthorsService } from '@services';
 import { authorsStore } from '@store/authors.store';
 
 const { Title } = Typography;
@@ -21,14 +20,15 @@ type AuthorForm = InferType<typeof authorNameSchema>;
 
 type AddAuthorButtonProps = { className?: string };
 export const AddAuthorButton: React.FC<AddAuthorButtonProps> = ({ className }) => {
+  const { addAuthor } = authorsStore;
+
   const [open, setOpen] = useState(false);
   const [isLoading, withLoading] = useWithLoading();
 
   const showModal = () => setOpen(true);
 
   const onSubmit = async ({ authorName }: AuthorForm) => {
-    const resp = await withLoading(AuthorsService.create(authorName));
-    authorsStore.addAuthor(resp.data.result);
+    await withLoading(addAuthor(authorName));
     handleCancel();
   };
 

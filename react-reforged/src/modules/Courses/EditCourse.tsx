@@ -2,13 +2,12 @@ import { SaveOutlined } from '@ant-design/icons';
 import { Button, Card, Divider, Input, Typography } from 'antd';
 import { Form, Formik } from 'formik';
 import { observer } from 'mobx-react-lite';
+import { useNavigate } from 'react-router-dom';
 import { array, number, object, string } from 'yup';
 
 import { InputField, BackButton } from '@components';
 import { useWithLoading } from '@hooks/useWithLoading';
-import { Author, CourseCreateForm, CourseEditForm } from '@models';
-import { CoursesService } from '@services';
-import { authorsStore } from '@store/authors.store';
+import { CourseCreateForm, CourseEditForm } from '@models';
 import { coursesStore } from '@store/courses.store';
 
 import { AuthorFormSection } from './components/AuthorFormSection';
@@ -35,23 +34,16 @@ const courseSchema = object().shape({
 
 // TODO: check PWA
 export const EditCourse = observer(function EditCourse() {
+  const navigate = useNavigate();
+
+  const { addCourse, ediitCourse } = coursesStore;
   const [isLoading, withLoading] = useWithLoading();
 
   const course = useSelectedCourseForm();
 
   const onSubmit = async (data: CourseEditForm | CourseCreateForm) => {
-    const courseRequest = course
-      ? CoursesService.update(data as CourseEditForm)
-      : CoursesService.create(data as CourseCreateForm);
-
-    const resp = await withLoading(courseRequest);
-
-    coursesStore.addCourse({
-      ...resp.data.result,
-      authors: resp.data.result.authors
-        .map((a) => authorsStore.authors.find(({ id }) => id === a))
-        .filter(Boolean) as Author[],
-    });
+    await withLoading(course ? ediitCourse(data as CourseEditForm) : addCourse(data));
+    navigate(-1);
   };
 
   return (
