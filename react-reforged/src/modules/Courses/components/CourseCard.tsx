@@ -39,7 +39,7 @@ export const CourseCard: React.FC<CourseCardProps> = ({ course }) => {
       <Card
         actions={[<DeleteCourseButton key='delete' id={course.id} />, ...getCardNavs(course.id)]}
       >
-        <div className='flex flex-col gap-3'>
+        <div className='flex flex-col gap-2 sm:gap-5'>
           <header>
             <Title level={4}>{course.title}</Title>
 

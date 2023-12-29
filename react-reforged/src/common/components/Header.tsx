@@ -9,6 +9,8 @@ import { getHref } from '@utils/get-href';
 import { Logo } from './Logo';
 
 export const Header = observer(function Header() {
+  // const { isLarge } = useBreakpoints();
+
   const { user, logoutUser } = userStore;
   return (
     <Layout.Header className='flex justify-between bg-white px-5 sm:px-10'>

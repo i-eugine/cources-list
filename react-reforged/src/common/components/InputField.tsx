@@ -37,7 +37,11 @@ export const InputField: React.FC<InputFieldProps> = ({
   <Field name={props.name}>
     {({ field, meta: { error, touched } }: FieldProps) => (
       <div className={className}>
-        {title && <Title level={5}>{title}</Title>}
+        {title && (
+          <Title className='!mb-0 !sm:mb-2' level={5}>
+            {title}
+          </Title>
+        )}
         <Component status={error && touched ? 'error' : ''} {...field} {...props} />
         <FieldErrorMessage name={props.name} />
       </div>

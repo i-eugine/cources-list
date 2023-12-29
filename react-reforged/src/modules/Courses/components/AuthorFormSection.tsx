@@ -24,7 +24,7 @@ export const AuthorFormSection = observer(function AuthorFormSection() {
           <>
             <Transfer
               dataSource={transitionData}
-              listStyle={{ flex: 1 }}
+              listStyle={{ flex: 1, minHeight: 0 }}
               render={(item) => item.name}
               showSelectAll={false}
               status={error && touched ? 'error' : ''}
@@ -49,7 +49,7 @@ export const AuthorFormSection = observer(function AuthorFormSection() {
               }) => {
                 console.log(direction, filteredItems, listSelectedKeys, listDisabled);
                 return (
-                  <Menu selectable={false}>
+                  <Menu className='max-h-44 overflow-auto' selectable={false}>
                     {filteredItems.map((item) => (
                       <Menu.Item key={item.key} onClick={() => onItemSelect(item.key, true)}>
                         <div className='flex justify-between items-center w-full'>

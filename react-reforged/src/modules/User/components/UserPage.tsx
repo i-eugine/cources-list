@@ -7,7 +7,7 @@ type UserPageProps = {
   title: string;
 };
 
-const dimentionsClass = 'h-full w-[480px] xl:w-[768px] pb-16 m-auto';
+const dimentionsClass = 'h-full w-full xl:w-[768px] pb-16 m-auto';
 const alignCenterClass = 'flex flex-col align-center justify-center';
 
 export const UserPage: React.FC<UserPageProps> = ({ title, children }) => (

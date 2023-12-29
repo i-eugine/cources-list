@@ -9,7 +9,6 @@ import { UserLoginForm } from './components/UserLoginForm';
 import { UserNote } from './components/UserNote';
 import { UserPage } from './components/UserPage';
 
-// TODO: add abort controller to cancel request on unmount
 export const UserRegistration = () => {
   const [isLoading, withLoading] = useWithLoading();
   const navigate = useNavigate();

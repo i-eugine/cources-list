@@ -19,13 +19,13 @@ export const CourseInfo: React.FC = observer(function CourseInfo() {
       <Title level={2}>{course.title}</Title>
 
       <Card>
-        <div className='flex gap-5'>
+        <div className='flex flex-col-reverse sm:flex-row gap-2 sm:gap-5'>
           <div className='flex-auto'>
             <Title level={5}>Description:</Title>
             <Text>{course.description}</Text>
           </div>
 
-          <div className='min-w-[22rem] -my-5'>
+          <div className='min-w-[22rem] -my-2 -sm:my-5'>
             {[
               { label: 'ID:', value: course.id },
               {
@@ -42,7 +42,7 @@ export const CourseInfo: React.FC = observer(function CourseInfo() {
                 value: course.authors.map(({ name, id }) => <Tag key={id}>{name}</Tag>),
               },
             ].map(({ label, value }, i) => (
-              <div key={i} className='my-5'>
+              <div key={i} className='my-2 sm:my-5'>
                 <Text className='inline-block w-16' strong>
                   {label}
                 </Text>

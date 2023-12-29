@@ -5,6 +5,7 @@ import { observer } from 'mobx-react-lite';
 import { useNavigate } from 'react-router-dom';
 import { array, number, object, string } from 'yup';
 
+import { useBreakpoints } from '@common-modules/breakpoints';
 import { InputField, BackButton } from '@components';
 import { useWithLoading } from '@hooks/useWithLoading';
 import { CourseCreateForm, CourseEditForm } from '@models';
@@ -34,6 +35,8 @@ const courseSchema = object().shape({
 
 // TODO: check PWA
 export const EditCourse = observer(function EditCourse() {
+  const { isLarge } = useBreakpoints();
+
   const navigate = useNavigate();
 
   const { addCourse, ediitCourse } = coursesStore;
@@ -54,14 +57,16 @@ export const EditCourse = observer(function EditCourse() {
     >
       {({ values }) => (
         <Form>
-          <Title level={2}>{course ? 'Edit' : 'Create'} course</Title>
+          <Title className='!mb-2 !sm:mb-5' level={2}>
+            {course ? 'Edit' : 'Create'} course
+          </Title>
 
-          <Card className='mb-5'>
+          <Card className='mb-2 sm:mb-5' size={isLarge ? 'default' : 'small'}>
             <article className='flex flex-col 2xl:flex-row 2xl:gap-5'>
               <section className='flex-auto'>
                 <Title level={3}>Course info</Title>
 
-                <div className='flex flex-col gap-5 mb-5'>
+                <div className='flex flex-col gap-2 sm:gap-5 mb-5'>
                   <InputField
                     Component={Input}
                     name='title'
@@ -87,7 +92,7 @@ export const EditCourse = observer(function EditCourse() {
                       type='number'
                     />
 
-                    <div className='pt-[42px] w-20'>
+                    <div className='pt-[30px] sm:pt-[42px] w-20'>
                       {values.duration && (
                         <>
                           <Text strong>{values.duration}</Text> hours
@@ -100,7 +105,7 @@ export const EditCourse = observer(function EditCourse() {
 
               <Divider className='h-auto hidden 2xl:inline-block' type='vertical' />
 
-              <section className='flex-auto pr-5 bor'>
+              <section className='flex-auto'>
                 <AuthorFormSection />
               </section>
             </article>
