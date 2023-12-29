@@ -2,9 +2,7 @@ import { Typography } from 'antd';
 
 const { Title } = Typography;
 
-type LogoProps = {
-  className?: string;
-};
+type LogoProps = { className?: string };
 
 export const Logo: React.FC<LogoProps> = () => (
   <div className='flex items-center text-zinc-500'>

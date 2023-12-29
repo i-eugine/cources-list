@@ -1,12 +1,13 @@
 import { Result, Button } from 'antd';
+import { Link } from 'react-router-dom';
 
 export const NotFoundPage = () => {
   return (
     <Result
       extra={
-        <Button href='/' type='primary'>
-          Back Home
-        </Button>
+        <Link to='/'>
+          <Button type='primary'>Back Home</Button>
+        </Link>
       }
       status='404'
       subTitle='Sorry, the page you visited does not exist.'

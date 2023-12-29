@@ -1,6 +1,7 @@
 import { SaveOutlined } from '@ant-design/icons';
 import { Button, Card, Divider, Input, Typography } from 'antd';
 import { Form, Formik } from 'formik';
+import { observer } from 'mobx-react-lite';
 import { array, number, object, string } from 'yup';
 
 import { withMessage, MESSAGE_KEYS } from '@common-modules/message';
@@ -8,7 +9,8 @@ import { InputField, BackButton } from '@components';
 import { useWithLoading } from '@hooks/useWithLoading';
 import { Author, CourseCreateForm, CourseEditForm } from '@models';
 import { CoursesService } from '@services';
-import { addCourse, authors } from '@store/signals';
+import { authorsStore } from '@store/authors.store';
+import { coursesStore } from '@store/courses.store';
 
 import { AuthorFormSection } from './components/AuthorFormSection';
 import { useSelectedCourseForm } from './hooks/useSelectedCourse.hook';
@@ -25,24 +27,18 @@ const courseSchema = object().shape({
   authors: array()
     .of(string())
     .min(1, 'At least 1 author is required')
-    .test('at least 1 author', 'at least 1 author is required', (authors) => {
-      console.log(authors);
-      return authors && authors.length >= 1;
-    }),
+    .test(
+      'at least 1 author',
+      'at least 1 author is required',
+      (authors) => authors && authors.length >= 1
+    ),
 });
 
-const a = array().of(string()).min(1, 'at least 1');
-
 // TODO: check PWA
-// TODO: add delete modal for author
-export const EditCourse = () => {
+export const EditCourse = observer(function EditCourse() {
   const [isLoading, withLoading] = useWithLoading();
 
   const course = useSelectedCourseForm();
-
-  console.log(a.isValidSync([]));
-  console.log(a.isValidSync(['1', '2']));
-  console.log(a.isValidSync(['1']));
 
   const onSubmit = async (data: CourseEditForm | CourseCreateForm) => {
     const courseRequest = course
@@ -51,10 +47,10 @@ export const EditCourse = () => {
 
     const resp = await withMessage(MESSAGE_KEYS.AUTHOR_CREATE, withLoading(courseRequest));
 
-    addCourse({
+    coursesStore.addCourse({
       ...resp.data.result,
       authors: resp.data.result.authors
-        .map((a) => authors.value.find(({ id }) => id === a))
+        .map((a) => authorsStore.authors.find(({ id }) => id === a))
         .filter(Boolean) as Author[],
     });
   };
@@ -135,4 +131,4 @@ export const EditCourse = () => {
       )}
     </Formik>
   );
-};
+});

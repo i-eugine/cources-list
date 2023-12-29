@@ -1,21 +1,24 @@
-import { useComputed } from '@preact/signals-react';
 import { Button } from 'antd';
-import { Link } from 'react-router-dom';
+import { observer } from 'mobx-react-lite';
+import { Link, Navigate } from 'react-router-dom';
 
 import { ROUTES } from '@routing/routes';
-import { courses } from '@store/signals';
+import { coursesStore } from '@store/courses.store';
 import { getHref } from '@utils/get-href';
 
 import { CourseCard } from './components/CourseCard';
 import { SearchBar } from './components/SearchBar';
 import { useSearch } from './hooks/useSearch.hook';
 
-export const Courses = () => {
+export const Courses = observer(function Courses() {
+  const { courses, filterCourses } = coursesStore;
   const [search, _] = useSearch();
 
-  const filteredCourses = useComputed(() =>
-    search ? courses.value.filter((c) => c.title.includes(search)) : courses.value
-  );
+  const filteredCourses = filterCourses(search);
+
+  if (!courses.length) {
+    return <Navigate to={getHref(ROUTES.noCourses)} />;
+  }
 
   return (
     <>
@@ -28,10 +31,10 @@ export const Courses = () => {
       </div>
 
       <div className='grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 mt-5'>
-        {filteredCourses.value.map((c) => (
+        {filteredCourses.map((c) => (
           <CourseCard key={c.id} course={c} />
         ))}
       </div>
     </>
   );
-};
+});

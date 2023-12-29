@@ -6,3 +6,4 @@ export * from './InputField';
 export * from './Layout';
 export * from './Logo';
 export * from './NotFoundPage';
+export * from './DeleteButton';

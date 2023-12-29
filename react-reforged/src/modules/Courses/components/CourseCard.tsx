@@ -19,7 +19,14 @@ const getCardNavs = (id: string) =>
     { key: 'edit', icon: <EditFilled />, href: getHref(ROUTES.courses, id, ROUTES.edit) },
     { key: 'info', icon: <FileTextFilled />, href: getHref(ROUTES.courses, id) },
   ].map((nav) => (
-    <Tooltip key={nav.key} title={`Navigate to course ${nav.key} page`}>
+    <Tooltip
+      key={nav.key}
+      title={() => (
+        <>
+          Navigate to course <span className='font-bold'>{nav.key}</span> page
+        </>
+      )}
+    >
       <Link to={nav.href}>
         <Button icon={nav.icon} shape='circle' type='primary' />
       </Link>
@@ -48,7 +55,10 @@ export const CourseCard: React.FC<CourseCardProps> = ({ course }) => {
             </div>
           </header>
 
-          <Text>{course.description}</Text>
+          <div className='h-28 overflow-hidden relative'>
+            <Text>{course.description}</Text>
+            <div className='absolute bottom-0 h-12 w-full bg-[linear-gradient(0deg,_rgba(255,255,255,1),_rgba(255,255,255,0.5))]'></div>
+          </div>
 
           <div className='flex'>
             <div className='flex-1'>

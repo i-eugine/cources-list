@@ -1,16 +1,16 @@
-import { useComputed } from '@preact/signals-react';
-import { Transfer, Typography } from 'antd';
+import { Menu, Transfer, Typography } from 'antd';
 import { Field, FieldProps } from 'formik';
+import { observer } from 'mobx-react-lite';
 
 import { FieldErrorMessage } from '@components';
-import { authors } from '@store/signals';
+import { authorsStore } from '@store/authors.store';
 
 import { AddAuthorButton } from './AddAuthorButton';
+import { DeleteAuthorButton } from './DeleteAuthorButton';
 
 const { Title } = Typography;
 
-export const AuthorFormSection = () => {
-  const dataSourse = useComputed(() => authors.value.map((a) => ({ ...a, key: a.id })));
+export const AuthorFormSection = observer(function AuthorFormSection() {
   return (
     <>
       <Title level={3}>
@@ -21,11 +21,8 @@ export const AuthorFormSection = () => {
       <Field name='authors'>
         {({ field, form, meta: { error, touched } }: FieldProps<string[]>) => (
           <>
-            <div>
-              {error} | {`${touched}`} | {field.value.length}
-            </div>
             <Transfer
-              dataSource={dataSourse.value}
+              dataSource={authorsStore.transitionData}
               listStyle={{ flex: 1 }}
               render={(item) => item.name}
               showSelectAll={false}
@@ -38,15 +35,37 @@ export const AuthorFormSection = () => {
                   ? field.value.filter((t) => !target.includes(t))
                   : field.value;
 
-                console.log(field.name);
                 form.setFieldValue(field.name, [...newTarget, ...source], true);
                 form.setFieldTouched(field.name, true, false);
               }}
-            />
+            >
+              {({
+                direction,
+                filteredItems,
+                onItemSelect,
+                selectedKeys: listSelectedKeys,
+                disabled: listDisabled,
+              }) => {
+                console.log(direction, filteredItems, listSelectedKeys, listDisabled);
+                return (
+                  <Menu selectable={false}>
+                    {filteredItems.map((item) => (
+                      <Menu.Item key={item.key} onClick={() => onItemSelect(item.key, true)}>
+                        <div className='flex justify-between items-center w-full'>
+                          {item.name}
+
+                          {direction === 'left' && <DeleteAuthorButton id={item.id} />}
+                        </div>
+                      </Menu.Item>
+                    ))}
+                  </Menu>
+                );
+              }}
+            </Transfer>
             <FieldErrorMessage name={field.name} />
           </>
         )}
       </Field>
     </>
   );
-};
+});

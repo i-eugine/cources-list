@@ -1,36 +1,12 @@
-import { DeleteFilled } from '@ant-design/icons';
-import { Tooltip, Button, Modal } from 'antd';
+import { DeleteButton } from '@components';
+import { coursesStore } from '@store/courses.store';
 
-import { withMessage, MESSAGE_KEYS } from '@common-modules/message';
-import { useWithLoading } from '@hooks/useWithLoading';
-import { CoursesService } from '@services';
-import { courses } from '@store/signals';
-
+// TODO add custom decorator for withMessage
 type DeleteCourseButtonProps = { id: string };
 export const DeleteCourseButton: React.FC<DeleteCourseButtonProps> = ({ id }) => {
-  const [isLoading, withLoading] = useWithLoading();
-
   const onDelete = async () => {
-    await withMessage(MESSAGE_KEYS.COURSE_DELETE, withLoading(CoursesService.delete(id)));
-    courses.value = courses.value.filter((c) => c.id !== id);
+    coursesStore.deleteCourse(id);
   };
 
-  return (
-    <Tooltip title='Navigate to course info page'>
-      <Button
-        key='delete'
-        icon={<DeleteFilled />}
-        loading={isLoading}
-        shape='circle'
-        type='primary'
-        onClick={() => {
-          Modal.confirm({
-            title: 'Delete course',
-            content: 'Are you sure you want to delete this course?',
-            onOk: onDelete,
-          });
-        }}
-      />
-    </Tooltip>
-  );
+  return <DeleteButton entityName='course' onDelete={onDelete} />;
 };

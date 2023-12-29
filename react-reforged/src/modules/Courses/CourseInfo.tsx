@@ -1,13 +1,14 @@
 import { Card, Tag, Typography } from 'antd';
+import { observer } from 'mobx-react-lite';
 
 import { NotFoundPage, BackButton } from '@components';
 
-import { useSelectedCourseInfo } from './hooks/useSelectedCourse.hook';
+import { useSelectedCourse } from './hooks/useSelectedCourse.hook';
 
 const { Title, Text } = Typography;
 
-export const CourseInfo: React.FC = () => {
-  const course = useSelectedCourseInfo();
+export const CourseInfo: React.FC = observer(function CourseInfo() {
+  const course = useSelectedCourse();
 
   if (!course) {
     return <NotFoundPage />;
@@ -21,10 +22,10 @@ export const CourseInfo: React.FC = () => {
         <div className='flex gap-5'>
           <div className='flex-auto'>
             <Title level={5}>Description:</Title>
-            <Text>{course.duration}</Text>
+            <Text>{course.description}</Text>
           </div>
 
-          <div className='w-[22rem] -my-5'>
+          <div className='min-w-[22rem] -my-5'>
             {[
               { label: 'ID:', value: course.id },
               {
@@ -37,9 +38,9 @@ export const CourseInfo: React.FC = () => {
               },
               { label: 'Created:', value: course.creationDate },
               { label: 'Authors:', value: course.authors.map(({ name }) => <Tag>{name}</Tag>) },
-            ].map(({ label, value }) => (
+            ].map(({ label, value }, i) => (
               <div className='my-5'>
-                <Text className='inline-block w-16' strong>
+                <Text key={i} className='inline-block w-16' strong>
                   {label}
                 </Text>
                 <Text>{value}</Text>
@@ -53,4 +54,4 @@ export const CourseInfo: React.FC = () => {
       </div>
     </div>
   );
-};
+});

@@ -33,16 +33,14 @@ export const InputField: React.FC<InputFieldProps> = ({
   Component,
   title,
   ...props
-}) => {
-  return (
-    <Field name={props.name}>
-      {({ field, meta: { error, touched } }: FieldProps) => (
-        <div className={className}>
-          {title && <Title level={5}>{title}</Title>}
-          <Component status={error && touched ? 'error' : ''} {...field} {...props} />
-          <FieldErrorMessage name={props.name} />
-        </div>
-      )}
-    </Field>
-  );
-};
+}) => (
+  <Field name={props.name}>
+    {({ field, meta: { error, touched } }: FieldProps) => (
+      <div className={className}>
+        {title && <Title level={5}>{title}</Title>}
+        <Component status={error && touched ? 'error' : ''} {...field} {...props} />
+        <FieldErrorMessage name={props.name} />
+      </div>
+    )}
+  </Field>
+);
