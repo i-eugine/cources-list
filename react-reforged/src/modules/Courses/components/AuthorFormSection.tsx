@@ -11,6 +11,7 @@ import { DeleteAuthorButton } from './DeleteAuthorButton';
 const { Title } = Typography;
 
 export const AuthorFormSection = observer(function AuthorFormSection() {
+  const { transitionData } = authorsStore;
   return (
     <>
       <Title level={3}>
@@ -22,7 +23,7 @@ export const AuthorFormSection = observer(function AuthorFormSection() {
         {({ field, form, meta: { error, touched } }: FieldProps<string[]>) => (
           <>
             <Transfer
-              dataSource={authorsStore.transitionData}
+              dataSource={transitionData}
               listStyle={{ flex: 1 }}
               render={(item) => item.name}
               showSelectAll={false}
