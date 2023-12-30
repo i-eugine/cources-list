@@ -10,7 +10,7 @@ const perfectionist = {
           aliases: [
             '@modules/**', '@models', '@routing/**', '@utils/**', '@store/**',
             '@components', '@hooks/**','@loaders', '@common-modules/*','@services',
-        ]
+          ]
         }
       }
     }

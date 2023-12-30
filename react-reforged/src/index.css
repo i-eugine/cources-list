@@ -1,5 +1,5 @@
-@import './assets/reset.css';
-@import './assets//ant-custom.css';
+@import './assets/styles/reset.css';
+@import './assets/styles/ant-custom.css';
 
 @tailwind base;
 @tailwind components;
