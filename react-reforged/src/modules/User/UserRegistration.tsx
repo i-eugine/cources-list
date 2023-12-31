@@ -9,7 +9,7 @@ import { UserLoginForm } from './components/UserLoginForm';
 import { UserNote } from './components/UserNote';
 import { UserPage } from './components/UserPage';
 
-export const UserRegistration = () => {
+export const UserRegistration: React.FC = () => {
   const [isLoading, withLoading] = useWithLoading();
   const navigate = useNavigate();
   return (

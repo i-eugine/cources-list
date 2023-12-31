@@ -6,7 +6,7 @@ import { getHref } from '@utils/get-href';
 
 const { Title, Text } = Typography;
 
-export const EmptyCourseList = () => {
+export const EmptyCourseList: React.FC = () => {
   return (
     <div>
       <Title level={3}>Your List Is Empty</Title>

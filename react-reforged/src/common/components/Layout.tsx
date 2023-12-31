@@ -6,7 +6,7 @@ import { MessageProvider } from '@common-modules/message';
 import { Header } from '@components';
 import { useMediaQuery } from '@hooks/useMediaQuery';
 
-export const AppLayout = () => {
+export const AppLayout: React.FC = () => {
   const isLarge = useMediaQuery('(min-width: 640px)');
 
   return (

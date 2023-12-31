@@ -33,7 +33,6 @@ const courseSchema = object().shape({
     ),
 });
 
-// TODO: check PWA
 export const EditCourse = observer(function EditCourse() {
   const { isLarge } = useBreakpoints();
 
