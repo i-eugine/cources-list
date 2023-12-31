@@ -2,6 +2,8 @@ import { Card, Tag, Typography } from 'antd';
 import { observer } from 'mobx-react-lite';
 
 import { NotFoundPage, BackButton } from '@components';
+import { formatCreationDate } from '@utils/format-creation-date';
+import { getCourseDuration } from '@utils/get-course-duration';
 
 import { useSelectedCourse } from './hooks/useSelectedCourse.hook';
 
@@ -32,11 +34,11 @@ export const CourseInfo: React.FC = observer(function CourseInfo() {
                 label: 'Duration:',
                 value: (
                   <>
-                    <Text strong>{course.duration}</Text> hours
+                    <Text strong>{getCourseDuration(course.duration)}</Text> hours
                   </>
                 ),
               },
-              { label: 'Created:', value: course.creationDate },
+              { label: 'Created:', value: formatCreationDate(course.creationDate) },
               {
                 label: 'Authors:',
                 value: course.authors.map(({ name, id }) => <Tag key={id}>{name}</Tag>),

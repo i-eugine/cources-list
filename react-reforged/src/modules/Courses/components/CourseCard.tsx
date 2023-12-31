@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 
 import { Course } from '@models';
 import { ROUTES } from '@routing/routes';
+import { formatCreationDate } from '@utils/format-creation-date';
+import { getCourseDuration } from '@utils/get-course-duration';
 import { getHref } from '@utils/get-href';
 
 import { DeleteCourseButton } from './DeleteCourseButton';
@@ -65,7 +67,7 @@ export const CourseCard: React.FC<CourseCardProps> = ({ course }) => {
               <Text className='mr-2' strong>
                 Created:
               </Text>
-              <Text>{course.creationDate}</Text>
+              <Text>{formatCreationDate(course.creationDate)}</Text>
             </div>
 
             <div className='flex-1'>
@@ -73,7 +75,7 @@ export const CourseCard: React.FC<CourseCardProps> = ({ course }) => {
                 Duration:
               </Text>
               <Text>
-                <Text strong>{course.duration}</Text> hours
+                <Text strong>{getCourseDuration(course.duration)}</Text> hours
               </Text>
             </div>
           </div>
