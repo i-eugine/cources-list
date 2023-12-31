@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { array, number, object, string } from 'yup';
 
 import { useBreakpoints } from '@common-modules/breakpoints';
-import { InputField, BackButton } from '@components';
+import { InputField, BackButton, AppHelmet } from '@components';
 import { useWithLoading } from '@hooks/useWithLoading';
 import { CourseCreateForm, CourseEditForm } from '@models';
 import { coursesStore } from '@store/courses.store';
@@ -49,81 +49,85 @@ export const EditCourse = observer(function EditCourse() {
   };
 
   return (
-    <Formik<CourseEditForm | CourseCreateForm>
-      initialValues={course || ({ authors: [] } as unknown as CourseCreateForm)}
-      validationSchema={courseSchema}
-      onSubmit={onSubmit}
-    >
-      {({ values }) => (
-        <Form>
-          <Title className='!mb-2 !sm:mb-5' level={2}>
-            {course ? 'Edit' : 'Create'} course
-          </Title>
+    <>
+      <AppHelmet title={course ? `Edit ${course.title}` : `Create new course`} />
 
-          <Card className='mb-2 sm:mb-5' size={isLarge ? 'default' : 'small'}>
-            <article className='flex flex-col 2xl:flex-row 2xl:gap-5'>
-              <section className='flex-auto'>
-                <Title level={3}>Course info</Title>
+      <Formik<CourseEditForm | CourseCreateForm>
+        initialValues={course || ({ authors: [] } as unknown as CourseCreateForm)}
+        validationSchema={courseSchema}
+        onSubmit={onSubmit}
+      >
+        {({ values }) => (
+          <Form>
+            <Title className='!mb-2 !sm:mb-5' level={2}>
+              {course ? 'Edit' : 'Create'} course
+            </Title>
 
-                <div className='flex flex-col gap-2 sm:gap-5 mb-5'>
-                  <InputField
-                    Component={Input}
-                    name='title'
-                    placeholder='Enter course title'
-                    title='Title:'
-                  />
+            <Card className='mb-2 sm:mb-5' size={isLarge ? 'default' : 'small'}>
+              <article className='flex flex-col 2xl:flex-row 2xl:gap-5'>
+                <section className='flex-auto'>
+                  <Title level={3}>Course info</Title>
 
-                  <InputField
-                    Component={Input.TextArea}
-                    name='description'
-                    placeholder='Enter course description'
-                    rows={4}
-                    title='Description:'
-                  />
-
-                  <div className='w-full sm:w-1/2 flex gap-5'>
+                  <div className='flex flex-col gap-2 sm:gap-5 mb-5'>
                     <InputField
-                      className='flex-1'
                       Component={Input}
-                      name='duration'
-                      placeholder='Enter course duration'
-                      title='Duration:'
-                      type='number'
+                      name='title'
+                      placeholder='Enter course title'
+                      title='Title:'
                     />
 
-                    <div className='pt-[30px] sm:pt-[42px] w-20'>
-                      {values.duration && (
-                        <>
-                          <Text strong>{values.duration}</Text> hours
-                        </>
-                      )}
+                    <InputField
+                      Component={Input.TextArea}
+                      name='description'
+                      placeholder='Enter course description'
+                      rows={4}
+                      title='Description:'
+                    />
+
+                    <div className='w-full sm:w-1/2 flex gap-5'>
+                      <InputField
+                        className='flex-1'
+                        Component={Input}
+                        name='duration'
+                        placeholder='Enter course duration'
+                        title='Duration:'
+                        type='number'
+                      />
+
+                      <div className='pt-[30px] sm:pt-[42px] w-20'>
+                        {values.duration && (
+                          <>
+                            <Text strong>{values.duration}</Text> hours
+                          </>
+                        )}
+                      </div>
                     </div>
                   </div>
-                </div>
-              </section>
+                </section>
 
-              <Divider className='h-auto hidden 2xl:inline-block' type='vertical' />
+                <Divider className='h-auto hidden 2xl:inline-block' type='vertical' />
 
-              <section className='flex-auto'>
-                <AuthorFormSection />
-              </section>
-            </article>
-          </Card>
-          <div className='text-right'>
-            <BackButton />
-            <Button
-              className='ml-3'
-              disabled={isLoading}
-              htmlType='submit'
-              icon={<SaveOutlined />}
-              loading={isLoading}
-              type='primary'
-            >
-              Save course
-            </Button>
-          </div>
-        </Form>
-      )}
-    </Formik>
+                <section className='flex-auto'>
+                  <AuthorFormSection />
+                </section>
+              </article>
+            </Card>
+            <div className='text-right'>
+              <BackButton />
+              <Button
+                className='ml-3'
+                disabled={isLoading}
+                htmlType='submit'
+                icon={<SaveOutlined />}
+                loading={isLoading}
+                type='primary'
+              >
+                Save course
+              </Button>
+            </div>
+          </Form>
+        )}
+      </Formik>
+    </>
   );
 });

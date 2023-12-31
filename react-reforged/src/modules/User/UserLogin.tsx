@@ -1,6 +1,7 @@
 import { observer } from 'mobx-react-lite';
 import { useNavigate } from 'react-router';
 
+import { AppHelmet } from '@components';
 import { useWithLoading } from '@hooks/useWithLoading';
 import { ROUTES } from '@routing/routes';
 import { userStore } from '@store/user.store';
@@ -17,6 +18,8 @@ export const UserLogin = observer(function UserLogin() {
 
   return (
     <UserPage title='Login'>
+      <AppHelmet description='Login to Courses App' title='Login' />
+
       <UserLoginForm
         isLoading={isLoading}
         onSubmit={async (data) => {

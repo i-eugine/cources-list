@@ -2,6 +2,7 @@ import { Button } from 'antd';
 import { observer } from 'mobx-react-lite';
 import { Link, Navigate } from 'react-router-dom';
 
+import { AppHelmet } from '@components';
 import { ROUTES } from '@routing/routes';
 import { coursesStore } from '@store/courses.store';
 import { getHref } from '@utils/get-href';
@@ -22,6 +23,8 @@ export const Courses = observer(function Courses() {
 
   return (
     <>
+      <AppHelmet description='Courses list' title='Courses' />
+
       <div className='flex gap-5 justify-between'>
         <SearchBar />
 

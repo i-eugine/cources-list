@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router';
 
+import { AppHelmet } from '@components';
 import { useWithLoading } from '@hooks/useWithLoading';
 import { ROUTES } from '@routing/routes';
 import { AuthService } from '@services';
@@ -14,6 +15,8 @@ export const UserRegistration: React.FC = () => {
   const navigate = useNavigate();
   return (
     <UserPage title='Registration'>
+      <AppHelmet description='Register to Courses App' title='Registration' />
+
       <UserLoginForm
         isLoading={isLoading}
         withName

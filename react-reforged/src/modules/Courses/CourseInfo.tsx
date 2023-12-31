@@ -1,7 +1,7 @@
 import { Card, Tag, Typography } from 'antd';
 import { observer } from 'mobx-react-lite';
 
-import { NotFoundPage, BackButton } from '@components';
+import { NotFoundPage, BackButton, AppHelmet } from '@components';
 import { formatCreationDate } from '@utils/format-creation-date';
 import { getCourseDuration } from '@utils/get-course-duration';
 
@@ -18,6 +18,8 @@ export const CourseInfo: React.FC = observer(function CourseInfo() {
 
   return (
     <div className='max-w-screen-lg m-auto'>
+      <AppHelmet description={`FullCourse information for ${course.title}`} title={course.title} />
+
       <Title level={2}>{course.title}</Title>
 
       <Card>
